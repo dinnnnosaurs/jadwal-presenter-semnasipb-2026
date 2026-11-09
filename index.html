@@ -381,7 +381,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
   // URL DI BAWAH HANYA CONTOH/DUMMY, BELUM MERUPAKAN TAUTAN RAPAT AKTIF.
   // Ketika URL asli tersedia, GANTI HANYA NILAI variabel ini.
   // Tidak perlu mengubah Google Sheets, Apps Script, atau fungsi-fungsi lainnya.
-  var ZOOM_URL_SEMINAR = 'https://zoom.us/j/00000000000';
+  var ZOOM_URL_SEMINAR = 'link_zoom';
 
   function getZoomHref(){
     var raw = ZOOM_URL_SEMINAR.trim();
@@ -401,7 +401,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
   function zoomButtonHtml(){
     var href = getZoomHref();
     if(!href) return '';
-    var demo = href === 'https://zoom.us/j/00000000000';
+    var demo = href === 'link_zoom';
     return '<a class="zoom-join" href="'+escapeHtml(href)+'" target="_blank" rel="noopener noreferrer"'+
       (demo ? ' title="Tautan Zoom contoh (dummy), belum ada rapat aktif"' : '')+'>'+
       '<svg class="icon" width="16" height="16" aria-hidden="true"><use href="#icon-video"></use></svg>Join Zoom</a>';
@@ -572,7 +572,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     document.getElementById('modalZoomSection').hidden = poster;
     tombolZoom.hidden = !hrefZoom;
     tombolZoom.textContent = 'Join Zoom';
-    tombolZoom.title = hrefZoom === 'https://zoom.us/j/00000000000' ?
+    tombolZoom.title = hrefZoom === 'link_zoom' ?
       'Tautan Zoom contoh (dummy), belum ada rapat aktif' : 'Buka Zoom di tab baru';
     if(hrefZoom) tombolZoom.href = hrefZoom;
     else tombolZoom.removeAttribute('href');
