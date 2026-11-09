@@ -537,6 +537,95 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     render();
   });
 
+  // === INTEGRASI GOOGLE SHEETS (perubahan hanya pada sumber data) ===
+  // Salin URL deployment Web App /exec dari google-apps-script/Code.gs.
+  // Jika belum diatur atau layanan gagal, 695 jadwal bawaan tetap ditampilkan.
+  var JADWAL_SYNC_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8kZCJJ6FRi8z6IKtYyA8u5cuKYqI8rgmvWA_J0tVFkZgdQvUMFuAqvLDMqDl8n_5q/exec';
+  var jadwalSyncSedangBerjalan = false;
+  var jadwalSyncCounter = 0;
+
+  function unduhJadwalDariAppsScript() {
+    return new Promise(function(resolve, reject) {
+      if (!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(JADWAL_SYNC_APPS_SCRIPT_URL)) {
+        reject(new Error('URL Apps Script belum diatur. Baca GOOGLE_SHEETS_SETUP.md.'));
+        return;
+      }
+
+      // JSONP menghindari kendala CORS antara GitHub Pages dan Apps Script.
+      var callback = '__semnasIpbJadwal' + (++jadwalSyncCounter);
+      var script = document.createElement('script');
+      var timer = null;
+      var selesai = false;
+      function tutup(error, data) {
+        if (selesai) return;
+        selesai = true;
+        clearTimeout(timer);
+        script.remove();
+        try { delete window[callback]; } catch (e) { window[callback] = undefined; }
+        if (error) reject(error);
+        else resolve(data);
+      }
+
+      window[callback] = function(data) { tutup(null, data); };
+      script.onerror = function() { tutup(new Error('Gagal membaca Google Apps Script.')); };
+      timer = setTimeout(function() { tutup(new Error('Batas waktu permintaan (20 detik).')); }, 20000);
+
+      var url = new URL(JADWAL_SYNC_APPS_SCRIPT_URL);
+      url.searchParams.set('callback', callback);
+      url.searchParams.set('_', String(Date.now()));
+      script.src = url.toString();
+      document.head.appendChild(script);
+    });
+  }
+
+  async function sinkronkanJadwalGoogleSheets() {
+    if (JADWAL_SYNC_APPS_SCRIPT_URL.indexOf('GANTI_DENGAN_') === 0 || jadwalSyncSedangBerjalan) return;
+    jadwalSyncSedangBerjalan = true;
+
+    try {
+      var hasil = await unduhJadwalDariAppsScript();
+      if (!hasil || hasil.ok !== true || !Array.isArray(hasil.records) || !hasil.records.length) {
+        throw new Error('Respons jadwal kosong atau tidak valid.');
+      }
+      // Validasi SELURUH catatan sebelum mengganti data yang tampil.
+      var jadwalBaru = hasil.records.map(function(baris, index) {
+        var nHari = Number(baris.hari);
+        var hari = DAYS[String(nHari)];
+        if (!hari || !baris.nama || !baris.judul || !baris.skema || !baris.ruang || !baris.jam) {
+          throw new Error('Data tidak lengkap pada presenter nomor ' + (index + 1));
+        }
+        var nama = String(baris.nama), judul = String(baris.judul);
+        return {
+          id: index + 1,
+          name: nama,
+          title: judul,
+          scheme: String(baris.skema),
+          dayNum: nHari,
+          tag: hari.tag,
+          type: hari.type,
+          date: hari.date,
+          room: String(baris.ruang),
+          time: String(baris.jam),
+          searchText: (judul + ' ' + nama).toLowerCase()
+        };
+      });
+
+      ALL = jadwalBaru;
+      el.heroTotalCount.textContent = ALL.length + ' entri jadwal';
+      render();
+      console.info('[Semnas IPB] Jadwal Google Sheets diperbarui:', ALL.length, hasil.perHari);
+    } catch (error) {
+      console.warn('[Semnas IPB] Sinkronisasi gagal; data lama tetap digunakan.', error);
+    } finally {
+      jadwalSyncSedangBerjalan = false;
+    }
+  }
+
+  // Memperbarui saat halaman dibuka dan setiap tiga menit saat masih terbuka.
+  sinkronkanJadwalGoogleSheets();
+  setInterval(sinkronkanJadwalGoogleSheets, 3 * 60 * 1000);
+  // === AKHIR INTEGRASI GOOGLE SHEETS ===
+
   render();
 })();
 </script>
