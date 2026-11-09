@@ -174,6 +174,19 @@ a{color:inherit;}
 .zoom-row{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:.74rem;color:var(--text-secondary);font-weight:600;}
 .zoom-row .icon{color:var(--text-muted);}
 .zoom-pending{color:var(--gold-700);background:var(--gold-bg);padding:2px 9px;border-radius:var(--radius-pill);font-size:.68rem;font-weight:700;margin-left:auto;}
+.zoom-join{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);padding:6px 12px;background:var(--navy-700);color:#fff;text-decoration:none;font-size:.74rem;font-weight:700;margin-left:auto;transition:background .18s,box-shadow .18s,transform .18s;}
+.zoom-join:hover,.zoom-join:focus-visible{background:var(--navy-900);color:#fff;box-shadow:0 4px 12px rgba(15,42,71,.24);transform:translateY(-2px);}
+.zoom-join:focus-visible{outline:2px solid var(--gold-600);outline-offset:3px;}
+.zoom-join.zoom-join-pending{background:var(--gold-bg);color:var(--gold-700);border:1px solid rgba(163,101,47,.24);}
+.zoom-join.zoom-join-pending:hover,.zoom-join.zoom-join-pending:focus-visible{background:#f8d79a;color:#7d481e;box-shadow:0 4px 12px rgba(163,101,47,.18);}
+.zoom-join[hidden]{display:none;}
+.modal-zoom .zoom-join{margin-top:12px;margin-left:0;}
+.zoom-info-anchor{max-width:1100px;margin:18px auto 36px;padding:0 20px;scroll-margin-top:24px;}
+.zoom-info-anchor[hidden]{display:none;}
+.zoom-info-panel{padding:18px 22px;border:1px solid var(--border-soft);background:var(--card-bg);border-radius:var(--radius-md);box-shadow:var(--shadow-card);}
+.zoom-info-panel h2{font-size:1rem;margin:0 0 6px;color:var(--navy-800);}
+.zoom-info-panel p{font-size:.84rem;line-height:1.65;color:var(--text-secondary);margin:0;}
+@media(prefers-reduced-motion:reduce){.zoom-join{transition:none;}.zoom-join:hover,.zoom-join:focus-visible{transform:none;}}
 
 /* Empty state */
 .empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-secondary);}
@@ -280,6 +293,13 @@ a{color:inherit;}
   <nav class="pagination" id="pagination" aria-label="Navigasi halaman"></nav>
 </section>
 
+<section id="linkzoom" class="zoom-info-anchor" aria-labelledby="zoom-info-heading">
+  <div class="zoom-info-panel">
+    <h2 id="zoom-info-heading">Informasi Link Zoom</h2>
+    <p>Link Zoom untuk Seminar Nasional Hasil Penelitian 2026 belum tersedia dan akan diumumkan melalui laman ini. Silakan periksa kembali mendekati pelaksanaan acara.</p>
+  </div>
+</section>
+
 <footer class="site-footer">
   <p>Data presenter Seminar Nasional Hasil Penelitian 2026 — IPB University.</p>
 </footer>
@@ -306,7 +326,8 @@ a{color:inherit;}
     </div>
     <div class="modal-zoom">
       <div class="modal-zoom-title"><svg class="icon" width="16" height="16"><use href="#icon-video"></use></svg> Tautan Zoom</div>
-      <p>Akan diumumkan mendekati hari pelaksanaan seminar. Pantau kanal resmi seminar untuk pembaruan tautan bergabung.</p>
+      <p id="modalZoomMessage">Akan diumumkan mendekati hari pelaksanaan seminar. Pantau kanal resmi seminar untuk pembaruan tautan bergabung.</p>
+      <a id="modalZoomLink" class="zoom-join" target="_blank" rel="noopener noreferrer" hidden>Gabung Zoom</a>
     </div>
   </div>
 </div>
@@ -340,6 +361,32 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
       searchText: (title + ' ' + name).toLowerCase()
     };
   });
+
+  // SATU TAUTAN ZOOM UNTUK SELURUH ACARA (1–4 Desember 2026).
+  // Saat belum ada tautan Zoom, gunakan #linkzoom agar tombol tetap dapat diklik.
+  // Nanti cukup ganti nilai ini menjadi tautan Zoom HTTPS yang sebenarnya.
+  // Google Sheets tidak perlu diubah.
+  var ZOOM_URL_SEMINAR = '#linkzoom';
+
+  function getZoomHref(){
+    var raw = ZOOM_URL_SEMINAR.trim();
+    if(raw === '#linkzoom') return raw;
+    if(!raw) return '';
+    try {
+      var u = new URL(raw);
+      return u.protocol === 'https:' ? u.href : '';
+    } catch(e) {
+      return '';
+    }
+  }
+  function zoomButtonHtml(){
+    var href = getZoomHref();
+    if(!href) return '<span class="zoom-pending">Akan diumumkan</span>';
+    var pending = href === '#linkzoom';
+    return '<a class="zoom-join'+(pending ? ' zoom-join-pending' : '')+'" href="'+escapeHtml(href)+'"'+
+      (pending ? ' title="Tautan Zoom belum tersedia" aria-label="Lihat informasi Zoom: tautan belum tersedia"' : ' target="_blank" rel="noopener noreferrer"')+'>'+
+      (pending ? 'Info Zoom' : 'Gabung Zoom')+'</a>';
+  }
 
   var PAGE_SIZE = 8;
   var state = { query: '', day: 'all', page: 1 };
@@ -406,7 +453,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
             '<div><div class="field-label">Ruang</div><div class="field-value">'+escapeHtml(r.room)+'</div></div>'+
             '<div><div class="field-label">Jam sesi</div><div class="field-value">'+escapeHtml(r.time)+'</div></div>'+
           '</div>'+
-          '<div class="zoom-row"><svg class="icon" width="14" height="14"><use href="#icon-video"></use></svg>Link Zoom<span class="zoom-pending">Akan diumumkan</span></div>'+
+          '<div class="zoom-row"><svg class="icon" width="14" height="14"><use href="#icon-video"></use></svg>Link Zoom'+zoomButtonHtml()+'</div>'+
         '</div>'+
       '</div>'
     );
@@ -472,6 +519,12 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     var cards = el.grid.querySelectorAll('.card');
     for(var i=0;i<cards.length;i++){
       cards[i].addEventListener('click', onCardActivate);
+      // Klik tautan Zoom langsung membuka Zoom, bukan modal kartu.
+      var tombolLangsung = cards[i].querySelector('.zoom-join');
+      if(tombolLangsung){
+        tombolLangsung.addEventListener('click', function(e){ e.stopPropagation(); });
+        tombolLangsung.addEventListener('keydown', function(e){ e.stopPropagation(); });
+      }
       cards[i].addEventListener('keydown', function(e){
         if(e.key==='Enter' || e.key===' '){ e.preventDefault(); onCardActivate(e); }
       });
@@ -494,6 +547,17 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     document.getElementById('modalDate').textContent = r.date;
     document.getElementById('modalRoom').textContent = r.room;
     document.getElementById('modalTime').textContent = r.time;
+    var hrefZoom = getZoomHref();
+    var tombolZoom = document.getElementById('modalZoomLink');
+    var zoomBelumTersedia = hrefZoom === '#linkzoom';
+    tombolZoom.hidden = !hrefZoom;
+    tombolZoom.textContent = zoomBelumTersedia ? 'Info Zoom' : 'Gabung Zoom';
+    tombolZoom.classList.toggle('zoom-join-pending', zoomBelumTersedia);
+    tombolZoom.title = zoomBelumTersedia ? 'Tautan Zoom belum tersedia' : 'Buka Zoom di tab baru';
+    tombolZoom.target = zoomBelumTersedia ? '_self' : '_blank';
+    document.getElementById('modalZoomMessage').hidden = !!hrefZoom && !zoomBelumTersedia;
+    if(hrefZoom) tombolZoom.href = hrefZoom;
+    else tombolZoom.removeAttribute('href');
     el.modalBackdrop.hidden = false;
     document.body.style.overflow = 'hidden';
     el.modalClose.focus();
@@ -502,6 +566,13 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     el.modalBackdrop.hidden = true;
     document.body.style.overflow = '';
   }
+  // Bila tombol masih memakai #linkzoom, tutup modal sebelum melompat ke info Zoom.
+  document.getElementById('modalZoomLink').addEventListener('click', function(){
+    if(getZoomHref() === '#linkzoom') closeModal();
+  });
+  var infoZoom = document.getElementById('linkzoom');
+  if(infoZoom) infoZoom.hidden = getZoomHref() !== '#linkzoom';
+
   el.modalClose.addEventListener('click', closeModal);
   el.modalBackdrop.addEventListener('click', function(e){ if(e.target === el.modalBackdrop) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !el.modalBackdrop.hidden) closeModal(); });
