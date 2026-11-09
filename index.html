@@ -405,7 +405,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     if(!placeholder && !href) return '';
     return '<a class="zoom-join'+(placeholder ? ' zoom-join-placeholder' : '')+'"'+
       (placeholder
-        ? ' aria-disabled="true" title="Tautan Zoom belum tersedia"'
+        ? ' aria-disabled="true" title="Tautan Zoom belum tersedia, akan segera diumumkan"'
         : ' href="'+escapeHtml(href)+'" target="_blank" rel="noopener noreferrer"')+'>'+
       '<svg class="icon" width="16" height="16" aria-hidden="true"><use href="#icon-video"></use></svg>Join Zoom</a>';
   }
@@ -577,7 +577,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     tombolZoom.hidden = poster || (!placeholderZoom && !hrefZoom);
     tombolZoom.textContent = 'Join Zoom';
     tombolZoom.classList.toggle('zoom-join-placeholder', placeholderZoom);
-    tombolZoom.title = placeholderZoom ? 'Tautan Zoom belum tersedia' : 'Buka Zoom di tab baru';
+    tombolZoom.title = placeholderZoom ? 'Tautan Zoom belum tersedia, akan segera diumumkan' : 'Buka Zoom di tab baru';
     if(placeholderZoom) tombolZoom.setAttribute('aria-disabled', 'true');
     else tombolZoom.removeAttribute('aria-disabled');
     if(hrefZoom) tombolZoom.href = hrefZoom;
