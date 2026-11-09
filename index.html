@@ -308,7 +308,7 @@ a{color:inherit;}
         <div class="modal-field"><div class="field-label">Jam sesi</div><div class="field-value" id="modalTime"></div></div>
       </div>
     </div>
-    <div class="modal-zoom">
+    <div class="modal-zoom" id="modalZoomSection">
       <div class="modal-zoom-title"><svg class="icon" width="16" height="16"><use href="#icon-video"></use></svg> Tautan Zoom</div>
       <a id="modalZoomLink" class="zoom-join" target="_blank" rel="noopener noreferrer" hidden>Join Zoom</a>
     </div>
@@ -361,6 +361,11 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
       return '';
     }
   }
+  function isPoster(r){
+    return String(r.type || '').toLowerCase() === 'poster' ||
+           String(r.tag || '').toLowerCase() === 'poster';
+  }
+
   function zoomButtonHtml(){
     var href = getZoomHref();
     if(!href) return '';
@@ -435,7 +440,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
             '<div><div class="field-label">Ruang</div><div class="field-value">'+escapeHtml(r.room)+'</div></div>'+
             '<div><div class="field-label">Jam sesi</div><div class="field-value">'+escapeHtml(r.time)+'</div></div>'+
           '</div>'+
-          '<div class="zoom-row">'+zoomButtonHtml()+'</div>'+
+          (isPoster(r) ? '' : '<div class="zoom-row">'+zoomButtonHtml()+'</div>')+
         '</div>'+
       '</div>'
     );
@@ -529,8 +534,10 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     document.getElementById('modalDate').textContent = r.date;
     document.getElementById('modalRoom').textContent = r.room;
     document.getElementById('modalTime').textContent = r.time;
-    var hrefZoom = getZoomHref();
+    var poster = isPoster(r);
+    var hrefZoom = poster ? '' : getZoomHref();
     var tombolZoom = document.getElementById('modalZoomLink');
+    document.getElementById('modalZoomSection').hidden = poster;
     tombolZoom.hidden = !hrefZoom;
     tombolZoom.textContent = 'Join Zoom';
     tombolZoom.title = hrefZoom === 'https://zoom.us/j/00000000000' ?
