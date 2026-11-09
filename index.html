@@ -436,7 +436,7 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     var html = '<button class="pill active" data-day="all">Semua tanggal</button>';
     DAY_ORDER.forEach(function(k){
       var d = DAYS[k];
-      html += '<button class="pill" data-day="'+k+'">'+escapeHtml(d.short)+' \u00b7 '+escapeHtml(d.tag)+'</button>';
+      html += '<button class="pill" data-day="'+k+'">'+escapeHtml(d.short)+' \u00b7 '+escapeHtml(d.type === 'Poster' ? 'ICC' : d.type === 'Presentasi' ? 'Zoom' : d.tag)+'</button>';
     });
     el.filterPills.innerHTML = html;
   })();
