@@ -46,3 +46,10 @@ Jika kebijakan akun Google organisasi tidak mengizinkan akses "Anyone", metode i
 
 ## Catatan
 Halaman publik *belum* menggunakan integrasi hingga URL Web App diisi dan PR digabungkan. Jangan langsung mengganti \`main\` sebelum memastikan Apps Script berfungsi. Tautan Zoom tetap mengikuti keadaan lama di situs; kolom E pada spreadsheet bukan sumber Zoom.
+
+## Status koneksi (9 November 2026)
+
+Endpoint Apps Script yang sudah diuji:
+`https://script.google.com/macros/s/AKfycbz8kZCJJ6FRi8z6IKtYyA8u5cuKYqI8rgmvWA_J0tVFkZgdQvUMFuAqvLDMqDl8n_5q/exec`
+
+Pengujian JSONP `?callback=verifySemnasIPB` berhasil dengan `ok:true`, total **695** data valid (20, 279, 279, 117). URL ini sudah dipasang dalam `index.html` pada cabang integrasi. Pengujian data berhasil, namun perubahan langsung pada spreadsheet belum dilakukan karena perlu menghindari mengubah data acara.
