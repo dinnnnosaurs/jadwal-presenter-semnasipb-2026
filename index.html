@@ -176,6 +176,7 @@ a{color:inherit;}
 .zoom-join:hover,.zoom-join:focus-visible{background:var(--navy-900);color:#fff;box-shadow:0 7px 16px rgba(15,42,71,.26);transform:translateY(-2px);}
 .zoom-join:focus-visible{outline:2px solid var(--gold-600);outline-offset:3px;}
 .zoom-join[hidden]{display:none;}
+.zoom-join-placeholder{cursor:not-allowed;}
 .modal-zoom .zoom-join{margin-top:14px;width:100%;}
 @media(prefers-reduced-motion:reduce){.zoom-join{transition:none;}.zoom-join:hover,.zoom-join:focus-visible{transform:none;}}
 
@@ -377,10 +378,10 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     };
   });
 
-  // SATU TAUTAN ZOOM UNTUK SELURUH ACARA (1–4 Desember 2026).
-  // URL DI BAWAH HANYA CONTOH/DUMMY, BELUM MERUPAKAN TAUTAN RAPAT AKTIF.
-  // Ketika URL asli tersedia, GANTI HANYA NILAI variabel ini.
-  // Tidak perlu mengubah Google Sheets, Apps Script, atau fungsi-fungsi lainnya.
+  // SATU TAUTAN ZOOM UNTUK SELURUH JADWAL PRESENTASI.
+  // 'link_zoom' = tombol terlihat dan ber-hover, namun tidak bisa diklik.
+  // Nanti cukup ganti nilainya dengan URL Zoom HTTPS yang sebenarnya.
+  // Google Sheets dan Google Apps Script tidak perlu diubah.
   var ZOOM_URL_SEMINAR = 'link_zoom';
 
   function getZoomHref(){
@@ -399,11 +400,13 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
   }
 
   function zoomButtonHtml(){
+    var placeholder = ZOOM_URL_SEMINAR.trim() === 'link_zoom';
     var href = getZoomHref();
-    if(!href) return '';
-    var demo = href === 'link_zoom';
-    return '<a class="zoom-join" href="'+escapeHtml(href)+'" target="_blank" rel="noopener noreferrer"'+
-      (demo ? ' title="Tautan Zoom contoh (dummy), belum ada rapat aktif"' : '')+'>'+
+    if(!placeholder && !href) return '';
+    return '<a class="zoom-join'+(placeholder ? ' zoom-join-placeholder' : '')+'"'+
+      (placeholder
+        ? ' aria-disabled="true" title="Tautan Zoom belum tersedia"'
+        : ' href="'+escapeHtml(href)+'" target="_blank" rel="noopener noreferrer"')+'>'+
       '<svg class="icon" width="16" height="16" aria-hidden="true"><use href="#icon-video"></use></svg>Join Zoom</a>';
   }
 
@@ -567,13 +570,16 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     document.getElementById('modalRoom').textContent = r.room;
     document.getElementById('modalTime').textContent = r.time;
     var poster = isPoster(r);
+    var placeholderZoom = !poster && ZOOM_URL_SEMINAR.trim() === 'link_zoom';
     var hrefZoom = poster ? '' : getZoomHref();
     var tombolZoom = document.getElementById('modalZoomLink');
     document.getElementById('modalZoomSection').hidden = poster;
-    tombolZoom.hidden = !hrefZoom;
+    tombolZoom.hidden = poster || (!placeholderZoom && !hrefZoom);
     tombolZoom.textContent = 'Join Zoom';
-    tombolZoom.title = hrefZoom === 'link_zoom' ?
-      'Tautan Zoom contoh (dummy), belum ada rapat aktif' : 'Buka Zoom di tab baru';
+    tombolZoom.classList.toggle('zoom-join-placeholder', placeholderZoom);
+    tombolZoom.title = placeholderZoom ? 'Tautan Zoom belum tersedia' : 'Buka Zoom di tab baru';
+    if(placeholderZoom) tombolZoom.setAttribute('aria-disabled', 'true');
+    else tombolZoom.removeAttribute('aria-disabled');
     if(hrefZoom) tombolZoom.href = hrefZoom;
     else tombolZoom.removeAttribute('href');
     el.modalBackdrop.hidden = false;
