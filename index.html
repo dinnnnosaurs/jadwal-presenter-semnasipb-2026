@@ -208,9 +208,23 @@ a{color:inherit;}
 .modal-zoom-title .icon{color:var(--gold-700);}
 .modal-zoom p{font-size:.8rem;color:var(--text-secondary);margin:0;line-height:1.55;}
 
-/* Footer */
-.site-footer{border-top:1px solid var(--border-softer);padding:26px clamp(16px,4vw,32px) calc(26px + env(safe-area-inset-bottom,0px));text-align:center;}
-.site-footer p{font-size:.78rem;color:var(--text-muted);margin:0;}
+/* Footer — mengikuti desain Seminar Nasional Hasil Penelitian IPB 2026 */
+.site-footer{background:#102c50;color:#dce8f5;}
+.site-footer-inner{max-width:1240px;margin:0 auto;padding:38px 32px 42px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:72px;}
+.site-footer-title{font-size:clamp(1.35rem,2.1vw,1.65rem);font-weight:800;line-height:1.25;letter-spacing:-.02em;color:#fff;margin:0 0 20px;}
+.site-footer-heading{font-size:.78rem;font-weight:700;color:#dce8f5;margin:0 0 4px;}
+.site-footer-text{font-size:.8rem;line-height:1.8;color:#dce8f5;margin:0;}
+.site-footer-contact{display:flex;flex-direction:column;align-items:flex-start;gap:0;margin-top:19px;}
+.site-footer-contact a{font-size:.82rem;line-height:1.8;color:#ffda86;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere;}
+.site-footer-contact a:hover{color:#fff2d7;}
+.site-footer-contact a:focus-visible{outline:2px solid #ffda86;outline-offset:3px;}
+.site-footer-bottom{border-top:1px solid rgba(220,232,245,.15);padding:17px 24px calc(17px + env(safe-area-inset-bottom,0px));text-align:center;}
+.site-footer-bottom p{font-size:.63rem;line-height:1.6;color:#cbdcf0;margin:0;}
+@media(max-width:760px){
+  .site-footer-inner{grid-template-columns:1fr;gap:30px;padding:32px 22px 36px;}
+  .site-footer-title{font-size:1.35rem;margin-bottom:16px;}
+  .site-footer-contact{margin-top:14px;}
+}
 </style>
 </head>
 <body>
@@ -285,7 +299,25 @@ a{color:inherit;}
 </section>
 
 <footer class="site-footer">
-  <p>Data presenter Seminar Nasional Hasil Penelitian 2026 — IPB University.</p>
+  <div class="site-footer-inner">
+    <div class="site-footer-about">
+      <h2 class="site-footer-title">Seminar Nasional Hasil Penelitian IPB 2026</h2>
+      <p class="site-footer-heading">Dikelola oleh:</p>
+      <p class="site-footer-text">Direktorat Riset dan Inovasi (DRI) IPB University</p>
+    </div>
+    <div class="site-footer-secretariat">
+      <h3 class="site-footer-heading">Sekretariat Panitia</h3>
+      <p class="site-footer-text">Gedung Andi Hakim Nasoetion, Lantai 5</p>
+      <p class="site-footer-text">Kampus IPB Dramaga, Bogor, Indonesia</p>
+      <div class="site-footer-contact">
+        <a href="mailto:dit.ri@apps.ipb.ac.id">dit.ri@apps.ipb.ac.id</a>
+        <a href="tel:+6285163516225">+62 851-6351-6225</a>
+      </div>
+    </div>
+  </div>
+  <div class="site-footer-bottom">
+    <p>© Seminar Nasional Hasil Penelitian IPB 2026 · Direktorat Riset dan Inovasi, IPB University.</p>
+  </div>
 </footer>
 
 <div class="modal-backdrop" id="modalBackdrop" hidden>
