@@ -174,6 +174,10 @@ a{color:inherit;}
 .zoom-row{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:.74rem;color:var(--text-secondary);font-weight:600;}
 .zoom-row .icon{color:var(--text-muted);}
 .zoom-pending{color:var(--gold-700);background:var(--gold-bg);padding:2px 9px;border-radius:var(--radius-pill);font-size:.68rem;font-weight:700;margin-left:auto;}
+.zoom-join{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);padding:6px 12px;background:var(--navy-700);color:#fff;text-decoration:none;font-size:.74rem;font-weight:700;margin-left:auto;transition:background .15s;}
+.zoom-join:hover,.zoom-join:focus-visible{background:var(--navy-900);color:#fff;}
+.zoom-join[hidden]{display:none;}
+.modal-zoom .zoom-join{margin-top:12px;margin-left:0;}
 
 /* Empty state */
 .empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-secondary);}
@@ -306,7 +310,8 @@ a{color:inherit;}
     </div>
     <div class="modal-zoom">
       <div class="modal-zoom-title"><svg class="icon" width="16" height="16"><use href="#icon-video"></use></svg> Tautan Zoom</div>
-      <p>Akan diumumkan mendekati hari pelaksanaan seminar. Pantau kanal resmi seminar untuk pembaruan tautan bergabung.</p>
+      <p id="modalZoomMessage">Akan diumumkan mendekati hari pelaksanaan seminar. Pantau kanal resmi seminar untuk pembaruan tautan bergabung.</p>
+      <a id="modalZoomLink" class="zoom-join" target="_blank" rel="noopener noreferrer" hidden>Gabung Zoom</a>
     </div>
   </div>
 </div>
@@ -340,6 +345,22 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
       searchText: (title + ' ' + name).toLowerCase()
     };
   });
+
+  // SATU TAUTAN ZOOM UNTUK SELURUH ACARA (1–4 Desember 2026).
+  // Isi dengan URL https://... ketika sudah siap diumumkan; kosong = "Akan diumumkan".
+  // Google Sheets tidak perlu diubah untuk pengaturan ini.
+  var ZOOM_URL_SEMINAR = '';
+
+  function getZoomHref(){
+    var raw = ZOOM_URL_SEMINAR.trim();
+    if(!raw) return '';
+    try {
+      var u = new URL(raw);
+      return u.protocol === 'https:' ? u.href : '';
+    } catch(e) {
+      return '';
+    }
+  }
 
   var PAGE_SIZE = 8;
   var state = { query: '', day: 'all', page: 1 };
@@ -406,7 +427,9 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
             '<div><div class="field-label">Ruang</div><div class="field-value">'+escapeHtml(r.room)+'</div></div>'+
             '<div><div class="field-label">Jam sesi</div><div class="field-value">'+escapeHtml(r.time)+'</div></div>'+
           '</div>'+
-          '<div class="zoom-row"><svg class="icon" width="14" height="14"><use href="#icon-video"></use></svg>Link Zoom<span class="zoom-pending">Akan diumumkan</span></div>'+
+          '<div class="zoom-row"><svg class="icon" width="14" height="14"><use href="#icon-video"></use></svg>Link Zoom'+
+            (getZoomHref() ? '<a class="zoom-join" href="'+escapeHtml(getZoomHref())+'" target="_blank" rel="noopener noreferrer">Gabung Zoom</a>' : '<span class="zoom-pending">Akan diumumkan</span>')+
+          '</div>'+
         '</div>'+
       '</div>'
     );
@@ -472,6 +495,12 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     var cards = el.grid.querySelectorAll('.card');
     for(var i=0;i<cards.length;i++){
       cards[i].addEventListener('click', onCardActivate);
+      // Klik tautan Zoom langsung membuka Zoom, bukan modal kartu.
+      var tombolLangsung = cards[i].querySelector('.zoom-join');
+      if(tombolLangsung){
+        tombolLangsung.addEventListener('click', function(e){ e.stopPropagation(); });
+        tombolLangsung.addEventListener('keydown', function(e){ e.stopPropagation(); });
+      }
       cards[i].addEventListener('keydown', function(e){
         if(e.key==='Enter' || e.key===' '){ e.preventDefault(); onCardActivate(e); }
       });
@@ -494,6 +523,12 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     document.getElementById('modalDate').textContent = r.date;
     document.getElementById('modalRoom').textContent = r.room;
     document.getElementById('modalTime').textContent = r.time;
+    var hrefZoom = getZoomHref();
+    var tombolZoom = document.getElementById('modalZoomLink');
+    tombolZoom.hidden = !hrefZoom;
+    document.getElementById('modalZoomMessage').hidden = !!hrefZoom;
+    if(hrefZoom) tombolZoom.href = hrefZoom;
+    else tombolZoom.removeAttribute('href');
     el.modalBackdrop.hidden = false;
     document.body.style.overflow = 'hidden';
     el.modalClose.focus();
