@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jadwal Presenter — Seminar Nasional Hasil Penelitian 2026</title>
+<meta name="description" content="Cari jadwal presentasi dan poster Seminar Nasional Hasil Penelitian 2026 IPB University berdasarkan nama ketua peneliti atau judul penelitian.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%85%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --navy-950:#0a1f36;
+  --navy-900:#0f2a47;
+  --navy-850:#123252;
+  --navy-800:#15395c;
+  --navy-700:#1d4b73;
+  --navy-600:#2a5f8a;
+  --navy-500:#3d7aab;
+  --gold-400:#ffda86;
+  --gold-600:#c9893a;
+  --gold-700:#a3652f;
+  --gold-bg:#fff2d7;
+  --blue-bg:#e3edfb;
+  --blue-text:#1e5f9e;
+  --page-bg:#f5f8fc;
+  --card-bg:#ffffff;
+  --card-subbox:#f3f7fc;
+  --border-soft:#dde7f1;
+  --border-softer:#e9eff5;
+  --text-primary:#112943;
+  --text-secondary:#5b6b80;
+  --text-muted:#8b96a7;
+  --text-on-navy:#dce8f5;
+  --text-on-navy-muted:#9fb3cc;
+  --shadow-card:0 1px 2px rgba(15,42,71,.05),0 8px 20px -12px rgba(15,42,71,.14);
+  --shadow-card-hover:0 4px 10px rgba(15,42,71,.07),0 18px 34px -16px rgba(15,42,71,.22);
+  --shadow-float:0 24px 60px -24px rgba(8,20,36,.4);
+  --radius-lg:20px;
+  --radius-md:16px;
+  --radius-sm:11px;
+  --radius-pill:999px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    /* Halaman ini sengaja tetap dominan putih (mengikuti referensi desain) walau perangkat memakai mode gelap. */
+    color-scheme: light;
+    --page-bg:#f5f8fc;
+    --card-bg:#ffffff;
+    --card-subbox:#f3f7fc;
+    --border-soft:#dde7f1;
+    --border-softer:#e9eff5;
+    --text-primary:#112943;
+    --text-secondary:#5b6b80;
+    --text-muted:#8b96a7;
+    --gold-bg:#fff2d7;
+    --gold-700:#a3652f;
+    --gold-600:#c9893a;
+    --blue-bg:#e3edfb;
+    --blue-text:#1e5f9e;
+    --shadow-card:0 1px 2px rgba(15,42,71,.05),0 8px 20px -12px rgba(15,42,71,.14);
+    --shadow-card-hover:0 4px 10px rgba(15,42,71,.07),0 18px 34px -16px rgba(15,42,71,.22);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: light;
+  --page-bg:#f5f8fc;
+  --card-bg:#ffffff;
+  --card-subbox:#f3f7fc;
+  --border-soft:#dde7f1;
+  --border-softer:#e9eff5;
+  --text-primary:#112943;
+  --text-secondary:#5b6b80;
+  --text-muted:#8b96a7;
+  --gold-bg:#fff2d7;
+  --gold-700:#a3652f;
+  --gold-600:#c9893a;
+  --blue-bg:#e3edfb;
+  --blue-text:#1e5f9e;
+  --shadow-card:0 1px 2px rgba(15,42,71,.05),0 8px 20px -12px rgba(15,42,71,.14);
+  --shadow-card-hover:0 4px 10px rgba(15,42,71,.07),0 18px 34px -16px rgba(15,42,71,.22);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:env(safe-area-inset-top,0px);}
+body{
+  margin:0;
+  font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  background:var(--page-bg);
+  color:var(--text-primary);
+  -webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+svg{display:block;}
+button{font-family:inherit;}
+a{color:inherit;}
+.icon{flex-shrink:0;}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+}
+:focus-visible{outline:2px solid var(--navy-600);outline-offset:2px;}
+
+/* Navbar */
+.navbar{background:var(--card-bg);border-bottom:1px solid var(--border-softer);}
+.navbar-inner{max-width:1240px;margin:0 auto;padding:14px clamp(16px,4vw,32px);display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-icon{width:34px;height:34px;border-radius:9px;background:var(--navy-900);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold-400);}
+.brand-text strong{display:block;font-size:.88rem;font-weight:700;color:var(--text-primary);}
+.brand-text span{display:block;font-size:.72rem;font-weight:600;color:var(--gold-700);}
+.nav-link{font-size:.82rem;font-weight:600;color:var(--navy-700);text-decoration:none;display:inline-flex;align-items:center;gap:4px;}
+.nav-link:hover{text-decoration:underline;}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,var(--navy-950) 0%,var(--navy-900) 36%,var(--navy-800) 66%,var(--navy-600) 100%);padding:clamp(28px,5vw,44px) clamp(16px,4vw,32px) 112px;}
+.hero-rings{position:absolute;top:0;right:0;height:100%;width:60%;pointer-events:none;z-index:0;}
+.hero-inner{max-width:1240px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;}
+.hero-text{max-width:560px;}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-on-navy-muted);margin-bottom:16px;}
+.eyebrow::before{content:"";width:18px;height:2px;background:var(--gold-400);display:inline-block;flex-shrink:0;}
+.hero-title{font-size:clamp(1.9rem,4.3vw,2.65rem);font-weight:800;line-height:1.12;color:#fff;margin:0 0 14px;letter-spacing:-.01em;}
+.hero-title .accent{color:var(--gold-400);}
+.hero-sub{font-size:.95rem;line-height:1.65;color:var(--text-on-navy);max-width:460px;font-weight:500;margin:0;}
+.hero-info{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-md);padding:16px 20px;min-width:230px;display:flex;gap:14px;align-items:flex-start;}
+.hero-info-icon{width:38px;height:38px;border-radius:10px;background:rgba(0,0,0,.26);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold-400);}
+.hero-info-label{font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-on-navy-muted);margin-bottom:4px;}
+.hero-info-main{font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:2px;}
+.hero-info-sub{font-size:.78rem;color:var(--text-on-navy-muted);font-weight:500;}
+
+/* Search card */
+.search-wrap{max-width:1240px;margin:-78px auto 0;padding:0 clamp(16px,4vw,32px);position:relative;z-index:2;}
+.search-card{background:var(--card-bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-float);padding:clamp(18px,3vw,28px);}
+.search-card h2{font-size:1.05rem;font-weight:700;margin:0 0 14px;}
+.search-input-wrap{position:relative;margin-bottom:16px;}
+.search-input-wrap .icon-search{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--text-muted);}
+.search-input{width:100%;border:1px solid var(--border-soft);background:var(--page-bg);border-radius:var(--radius-sm);padding:13px 42px 13px 44px;font-size:.9rem;font-family:inherit;color:var(--text-primary);transition:border-color .15s,box-shadow .15s;}
+.search-input::placeholder{color:var(--text-muted);}
+.search-input:focus{outline:none;border-color:var(--navy-600);box-shadow:0 0 0 3px rgba(42,95,138,.14);}
+.search-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:none;background:none;color:var(--text-muted);cursor:pointer;padding:7px;border-radius:999px;display:none;align-items:center;justify-content:center;}
+.search-clear:hover{background:var(--border-softer);}
+.filter-pills{display:flex;gap:9px;flex-wrap:wrap;}
+.pill{border:1px solid var(--border-soft);background:var(--card-bg);color:var(--navy-800);font-size:.8rem;font-weight:600;padding:8px 16px;border-radius:var(--radius-pill);cursor:pointer;transition:background .15s,color .15s,border-color .15s;white-space:nowrap;}
+.pill:hover{border-color:var(--navy-500);}
+.pill.active{background:var(--navy-900);border-color:var(--navy-900);color:#fff;}
+
+/* Results */
+.results{max-width:1240px;margin:0 auto;padding:36px clamp(16px,4vw,32px) 64px;}
+.results-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+.results-head h2{font-size:1.2rem;font-weight:700;margin:0 0 4px;}
+.results-count{font-size:.82rem;color:var(--text-secondary);font-weight:500;}
+.results-tz{font-size:.78rem;color:var(--text-muted);font-weight:600;display:inline-flex;align-items:center;gap:6px;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.grid{grid-template-columns:1fr;} .hero-inner{flex-direction:column;} .hero-info{width:100%;}}
+
+/* Card */
+.card{background:var(--card-bg);border-radius:var(--radius-md);box-shadow:var(--shadow-card);cursor:pointer;display:flex;flex-direction:column;overflow:hidden;border-top:3px solid var(--gold-400);transition:box-shadow .18s,transform .18s;text-align:left;}
+.card.type-presentasi{border-top-color:var(--blue-text);}
+.card:hover,.card:focus-visible{box-shadow:var(--shadow-card-hover);transform:translateY(-2px);}
+.card-body{padding:18px 18px 0;}
+.badge{display:inline-flex;align-items:center;font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:var(--radius-pill);background:var(--gold-bg);color:var(--gold-700);margin-bottom:12px;}
+.badge.type-presentasi{background:var(--blue-bg);color:var(--blue-text);}
+.card-title{font-size:.95rem;font-weight:700;line-height:1.4;margin:0 0 14px;color:var(--text-primary);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:calc(1.4em * 3);}
+.person-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--card-subbox);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy-600);}
+.field-label{font-size:.7rem;font-weight:600;color:var(--text-secondary);margin-bottom:2px;}
+.field-value{font-size:.85rem;font-weight:700;color:var(--text-primary);line-height:1.3;}
+.scheme-row{display:flex;gap:6px;align-items:baseline;font-size:.82rem;margin-bottom:16px;flex-wrap:wrap;}
+.scheme-row .field-label{margin-bottom:0;}
+.card-meta{background:var(--card-subbox);margin-top:auto;padding:14px 18px;border-top:1px solid var(--border-softer);}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:10px;margin-top:10px;border-top:1px solid var(--border-soft);}
+.zoom-row{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:.74rem;color:var(--text-secondary);font-weight:600;}
+.zoom-row .icon{color:var(--text-muted);}
+.zoom-pending{color:var(--gold-700);background:var(--gold-bg);padding:2px 9px;border-radius:var(--radius-pill);font-size:.68rem;font-weight:700;margin-left:auto;}
+
+/* Empty state */
+.empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-secondary);}
+.empty-state .icon{margin:0 auto 14px;color:var(--text-muted);}
+.empty-state h3{font-size:1.05rem;font-weight:700;color:var(--text-primary);margin:0 0 6px;}
+.empty-state p{font-size:.85rem;margin:0;}
+
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:36px;flex-wrap:wrap;}
+.page-btn{border:1px solid var(--border-soft);background:var(--card-bg);color:var(--navy-800);font-size:.82rem;font-weight:600;min-width:38px;height:38px;padding:0 12px;border-radius:var(--radius-sm);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;}
+.page-btn:hover:not(:disabled){border-color:var(--navy-600);}
+.page-btn.active{background:var(--navy-900);border-color:var(--navy-900);color:#fff;}
+.page-btn:disabled{opacity:.4;cursor:not-allowed;}
+.page-ellipsis{color:var(--text-muted);padding:0 4px;font-size:.82rem;}
+
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(6,13,24,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;}
+.modal-backdrop[hidden]{display:none;}
+.modal{background:var(--card-bg);border-radius:var(--radius-lg);max-width:560px;width:100%;max-height:min(85vh,720px);overflow-y:auto;padding:28px;position:relative;box-shadow:var(--shadow-float);}
+.modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:none;background:var(--card-subbox);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:var(--border-soft);}
+.modal-title{font-size:1.15rem;font-weight:800;line-height:1.45;margin:0 0 18px;padding-right:30px;color:var(--text-primary);}
+.modal-meta{margin-top:18px;}
+.modal-field{margin-bottom:0;}
+.modal-grid-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft);}
+.modal-zoom{background:var(--card-subbox);border-radius:var(--radius-sm);padding:16px;margin-top:20px;}
+.modal-zoom-title{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.88rem;margin-bottom:6px;color:var(--text-primary);}
+.modal-zoom-title .icon{color:var(--gold-700);}
+.modal-zoom p{font-size:.8rem;color:var(--text-secondary);margin:0;line-height:1.55;}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--border-softer);padding:26px clamp(16px,4vw,32px) calc(26px + env(safe-area-inset-bottom,0px));text-align:center;}
+.site-footer p{font-size:.78rem;color:var(--text-muted);margin:0;}
+</style>
+</head>
+<body>
+
+<svg class="visually-hidden" aria-hidden="true" focusable="false">
+  <symbol id="icon-calendar" viewBox="0 0 24 24"><path d="M7 2.5v3M17 2.5v3M3.5 9.5h17M5.5 4.5h13A1.5 1.5 0 0 1 20 6v13.5A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5V6a1.5 1.5 0 0 1 1.5-1.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c1.3-3.7 4.3-5.6 7.5-5.6s6.2 1.9 7.5 5.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="icon-video" viewBox="0 0 24 24"><rect x="2.5" y="6" width="13" height="12" rx="2.3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 10.3 21 7.5v9l-5.5-2.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="icon-empty" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15 15l5.5 5.5M8 10.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="icon-external" viewBox="0 0 24 24"><path d="M9 6h9v9M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <div class="brand">
+      <span class="brand-icon"><svg class="icon" width="18" height="18"><use href="#icon-calendar"></use></svg></span>
+      <span class="brand-text"><strong>Seminar Hasil Penelitian</strong><span>IPB University · 2026</span></span>
+    </div>
+    <a href="#top" class="nav-link">Beranda seminar <svg class="icon" width="13" height="13"><use href="#icon-external"></use></svg></a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <svg class="hero-rings" viewBox="0 0 600 400" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <circle cx="560" cy="150" r="60" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1"/>
+    <circle cx="560" cy="150" r="115" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+    <circle cx="560" cy="150" r="170" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+    <circle cx="560" cy="150" r="225" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="eyebrow">Seminar Nasional Hasil Penelitian 2026</div>
+      <h1 class="hero-title">Jadwal <span class="accent">Presenter</span></h1>
+      <p class="hero-sub">Temukan jadwal presentasi dan poster berdasarkan nama ketua peneliti atau judul penelitian.</p>
+    </div>
+    <div class="hero-info">
+      <span class="hero-info-icon"><svg class="icon" width="20" height="20"><use href="#icon-calendar"></use></svg></span>
+      <div>
+        <div class="hero-info-label">Pelaksanaan Seminar</div>
+        <div class="hero-info-main">1–4 Desember 2026</div>
+        <div class="hero-info-sub" id="heroTotalCount">695 entri jadwal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="search-wrap">
+  <div class="search-card">
+    <h2>Cari jadwal</h2>
+    <div class="search-input-wrap">
+      <svg class="icon icon-search" width="18" height="18"><use href="#icon-search"></use></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Nama peneliti atau judul penelitian" autocomplete="off">
+      <button class="search-clear" id="searchClear" aria-label="Hapus pencarian"><svg class="icon" width="16" height="16"><use href="#icon-x"></use></svg></button>
+    </div>
+    <div class="filter-pills" id="filterPills"></div>
+  </div>
+</div>
+
+<section class="results">
+  <div class="results-head">
+    <div>
+      <h2>Daftar jadwal</h2>
+      <div class="results-count" id="resultsCount">Memuat jadwal…</div>
+    </div>
+    <div class="results-tz"><svg class="icon" width="14" height="14"><use href="#icon-clock"></use></svg> Waktu Indonesia Barat</div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <nav class="pagination" id="pagination" aria-label="Navigasi halaman"></nav>
+</section>
+
+<footer class="site-footer">
+  <p>Data presenter Seminar Nasional Hasil Penelitian 2026 — IPB University.</p>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Tutup"><svg class="icon" width="18" height="18"><use href="#icon-x"></use></svg></button>
+    <span class="badge" id="modalBadge"></span>
+    <h2 class="modal-title" id="modalTitle"></h2>
+    <div class="person-row">
+      <span class="avatar"><svg class="icon" width="16" height="16"><use href="#icon-user"></use></svg></span>
+      <div>
+        <div class="field-label">Ketua peneliti</div>
+        <div class="field-value" id="modalName"></div>
+      </div>
+    </div>
+    <div class="scheme-row"><span class="field-label">Skema</span><span class="field-value" id="modalScheme"></span></div>
+    <div class="modal-meta">
+      <div class="modal-field"><div class="field-label">Tanggal</div><div class="field-value" id="modalDate"></div></div>
+      <div class="modal-grid-2col">
+        <div class="modal-field"><div class="field-label">Ruang</div><div class="field-value" id="modalRoom"></div></div>
+        <div class="modal-field"><div class="field-label">Jam sesi</div><div class="field-value" id="modalTime"></div></div>
+      </div>
+    </div>
+    <div class="modal-zoom">
+      <div class="modal-zoom-title"><svg class="icon" width="16" height="16"><use href="#icon-video"></use></svg> Tautan Zoom</div>
+      <p>Akan diumumkan mendekati hari pelaksanaan seminar. Pantau kanal resmi seminar untuk pembaruan tautan bergabung.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/*__DATA_BLOB__*/
+</script>
+<script>
+(function(){
+  'use strict';
+  var DB = window.JADWAL_DB;
+  var DAYS = DB.days;
+  var DAY_ORDER = ['1','2','3','4'];
+
+  var ALL = DB.records.map(function(r, i){
+    var nameIdx=r[0], title=r[1], schemeIdx=r[2], dayNum=r[3], room=r[4], timeIdx=r[5];
+    var day = DAYS[String(dayNum)];
+    var time = DB.times[String(dayNum)][timeIdx];
+    var name = DB.names[nameIdx];
+    return {
+      id: i+1,
+      name: name,
+      title: title,
+      scheme: DB.schemes[schemeIdx],
+      dayNum: dayNum,
+      tag: day.tag,
+      type: day.type,
+      date: day.date,
+      room: dayNum === 1 ? 'Ballroom 3' : ('Room ' + room),
+      time: time,
+      searchText: (title + ' ' + name).toLowerCase()
+    };
+  });
+
+  var PAGE_SIZE = 8;
+  var state = { query: '', day: 'all', page: 1 };
+
+  var el = {
+    grid: document.getElementById('grid'),
+    pagination: document.getElementById('pagination'),
+    resultsCount: document.getElementById('resultsCount'),
+    searchInput: document.getElementById('searchInput'),
+    searchClear: document.getElementById('searchClear'),
+    filterPills: document.getElementById('filterPills'),
+    heroTotalCount: document.getElementById('heroTotalCount'),
+    modalBackdrop: document.getElementById('modalBackdrop'),
+    modalClose: document.getElementById('modalClose'),
+    results: document.querySelector('.results')
+  };
+
+  el.heroTotalCount.textContent = ALL.length + ' entri jadwal';
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  // Build filter pills from data
+  (function initPills(){
+    var html = '<button class="pill active" data-day="all">Semua tanggal</button>';
+    DAY_ORDER.forEach(function(k){
+      var d = DAYS[k];
+      html += '<button class="pill" data-day="'+k+'">'+escapeHtml(d.short)+' \u00b7 '+escapeHtml(d.tag)+'</button>';
+    });
+    el.filterPills.innerHTML = html;
+  })();
+
+  function getFiltered(){
+    var list = ALL;
+    if(state.day !== 'all'){
+      list = list.filter(function(r){ return r.dayNum === state.day; });
+    }
+    if(state.query){
+      var q = state.query;
+      list = list.filter(function(r){ return r.searchText.indexOf(q) !== -1; });
+    }
+    return list;
+  }
+
+  function cardHtml(r){
+    var typeClass = r.type === 'Poster' ? '' : 'type-presentasi';
+    return (
+      '<div class="card '+typeClass+'" role="button" tabindex="0" data-id="'+r.id+'" aria-haspopup="dialog" aria-label="Lihat detail jadwal: '+escapeHtml(r.title)+'">'+
+        '<div class="card-body">'+
+          '<span class="badge '+typeClass+'">'+escapeHtml(r.tag)+'</span>'+
+          '<h3 class="card-title">'+escapeHtml(r.title)+'</h3>'+
+          '<div class="person-row">'+
+            '<span class="avatar"><svg class="icon" width="16" height="16"><use href="#icon-user"></use></svg></span>'+
+            '<div><div class="field-label">Ketua peneliti</div><div class="field-value">'+escapeHtml(r.name)+'</div></div>'+
+          '</div>'+
+          '<div class="scheme-row"><span class="field-label">Skema</span><span class="field-value">'+escapeHtml(r.scheme)+'</span></div>'+
+        '</div>'+
+        '<div class="card-meta">'+
+          '<div><div class="field-label">Tanggal</div><div class="field-value">'+escapeHtml(r.date)+'</div></div>'+
+          '<div class="meta-grid">'+
+            '<div><div class="field-label">Ruang</div><div class="field-value">'+escapeHtml(r.room)+'</div></div>'+
+            '<div><div class="field-label">Jam sesi</div><div class="field-value">'+escapeHtml(r.time)+'</div></div>'+
+          '</div>'+
+          '<div class="zoom-row"><svg class="icon" width="14" height="14"><use href="#icon-video"></use></svg>Link Zoom<span class="zoom-pending">Akan diumumkan</span></div>'+
+        '</div>'+
+      '</div>'
+    );
+  }
+
+  function render(){
+    var filtered = getFiltered();
+    var total = filtered.length;
+    var totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if(state.page > totalPages) state.page = totalPages;
+    if(state.page < 1) state.page = 1;
+
+    var startIdx = (state.page - 1) * PAGE_SIZE;
+    var pageItems = filtered.slice(startIdx, startIdx + PAGE_SIZE);
+
+    if(total === 0){
+      el.grid.innerHTML = '<div class="empty-state"><svg class="icon" width="40" height="40"><use href="#icon-empty"></use></svg>'+
+        '<h3>Jadwal tidak ditemukan</h3><p>Coba kata kunci lain atau pilih tanggal yang berbeda.</p></div>';
+      el.resultsCount.textContent = 'Menampilkan 0 dari '+ALL.length+' jadwal';
+    } else {
+      el.grid.innerHTML = pageItems.map(cardHtml).join('');
+      var endIdx = Math.min(startIdx + PAGE_SIZE, total);
+      el.resultsCount.textContent = 'Menampilkan '+(startIdx+1)+'\u2013'+endIdx+' dari '+total+' jadwal';
+    }
+
+    renderPagination(totalPages);
+    bindCardEvents();
+  }
+
+  function renderPagination(totalPages){
+    if(totalPages <= 1){ el.pagination.innerHTML=''; return; }
+    var p = state.page;
+    var pages = [];
+    function addP(n){ if(pages.indexOf(n)===-1 && n>=1 && n<=totalPages) pages.push(n); }
+    addP(1); addP(totalPages);
+    for(var i=p-1;i<=p+1;i++) addP(i);
+    pages.sort(function(a,b){return a-b;});
+
+    var html = '<button class="page-btn" data-page="'+(p-1)+'" '+(p<=1?'disabled':'')+' aria-label="Halaman sebelumnya">\u2039</button>';
+    var prev = 0;
+    pages.forEach(function(n){
+      if(prev && n - prev > 1) html += '<span class="page-ellipsis">\u2026</span>';
+      html += '<button class="page-btn'+(n===p?' active':'')+'" data-page="'+n+'">'+n+'</button>';
+      prev = n;
+    });
+    html += '<button class="page-btn" data-page="'+(p+1)+'" '+(p>=totalPages?'disabled':'')+' aria-label="Halaman berikutnya">\u203a</button>';
+    el.pagination.innerHTML = html;
+
+    var btns = el.pagination.querySelectorAll('.page-btn');
+    for(var j=0;j<btns.length;j++){
+      btns[j].addEventListener('click', function(e){
+        var n = parseInt(e.currentTarget.getAttribute('data-page'),10);
+        if(!isNaN(n)){
+          state.page = n;
+          render();
+          el.results.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    }
+  }
+
+  function bindCardEvents(){
+    var cards = el.grid.querySelectorAll('.card');
+    for(var i=0;i<cards.length;i++){
+      cards[i].addEventListener('click', onCardActivate);
+      cards[i].addEventListener('keydown', function(e){
+        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); onCardActivate(e); }
+      });
+    }
+  }
+  function onCardActivate(e){
+    var id = parseInt(e.currentTarget.getAttribute('data-id'),10);
+    openModal(id);
+  }
+
+  function openModal(id){
+    var r = ALL[id-1];
+    if(!r) return;
+    var badge = document.getElementById('modalBadge');
+    badge.textContent = r.tag;
+    badge.className = 'badge ' + (r.type==='Poster'?'':'type-presentasi');
+    document.getElementById('modalTitle').textContent = r.title;
+    document.getElementById('modalName').textContent = r.name;
+    document.getElementById('modalScheme').textContent = r.scheme;
+    document.getElementById('modalDate').textContent = r.date;
+    document.getElementById('modalRoom').textContent = r.room;
+    document.getElementById('modalTime').textContent = r.time;
+    el.modalBackdrop.hidden = false;
+    document.body.style.overflow = 'hidden';
+    el.modalClose.focus();
+  }
+  function closeModal(){
+    el.modalBackdrop.hidden = true;
+    document.body.style.overflow = '';
+  }
+  el.modalClose.addEventListener('click', closeModal);
+  el.modalBackdrop.addEventListener('click', function(e){ if(e.target === el.modalBackdrop) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !el.modalBackdrop.hidden) closeModal(); });
+
+  var debounceTimer;
+  el.searchInput.addEventListener('input', function(){
+    el.searchClear.style.display = el.searchInput.value ? 'flex' : 'none';
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function(){
+      state.query = el.searchInput.value.trim().toLowerCase();
+      state.page = 1;
+      render();
+    }, 200);
+  });
+  el.searchClear.addEventListener('click', function(){
+    el.searchInput.value='';
+    el.searchClear.style.display='none';
+    state.query='';
+    state.page=1;
+    render();
+    el.searchInput.focus();
+  });
+
+  el.filterPills.addEventListener('click', function(e){
+    var btn = e.target.closest('.pill');
+    if(!btn) return;
+    var current = el.filterPills.querySelectorAll('.pill');
+    for(var i=0;i<current.length;i++) current[i].classList.remove('active');
+    btn.classList.add('active');
+    var d = btn.getAttribute('data-day');
+    state.day = d === 'all' ? 'all' : parseInt(d,10);
+    state.page = 1;
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
