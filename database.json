@@ -10,7 +10,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "10.45-10.50 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. drh Huda Salahuddin D"
   },
   {
     "id": 2,
@@ -23,7 +26,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "10.50-10.55 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. drh Huda Salahuddin D"
   },
   {
     "id": 3,
@@ -36,7 +42,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "10.55-11.00 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. drh Huda Salahuddin D"
   },
   {
     "id": 4,
@@ -49,7 +58,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "11.00-11.05 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. drh Huda Salahuddin D"
   },
   {
     "id": 5,
@@ -62,7 +74,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "11.05-11.10 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. drh Huda Salahuddin D"
   },
   {
     "id": 6,
@@ -75,7 +90,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "10.45-10.50 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 2",
+    "moderator": ""
   },
   {
     "id": 7,
@@ -88,7 +106,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "10.50-10.55 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 2",
+    "moderator": ""
   },
   {
     "id": 8,
@@ -101,7 +122,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "10.55-11.00 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 2",
+    "moderator": ""
   },
   {
     "id": 9,
@@ -114,7 +138,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "11.00-11.05 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 2",
+    "moderator": ""
   },
   {
     "id": 10,
@@ -127,7 +154,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "11.05-11.10 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Pagi",
+    "bagian": "Bagian 2",
+    "moderator": ""
   },
   {
     "id": 11,
@@ -140,7 +170,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.30-15.35 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. Dewi Sukma"
   },
   {
     "id": 12,
@@ -153,7 +186,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.35-15.40 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. Dewi Sukma"
   },
   {
     "id": 13,
@@ -166,7 +202,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.40-15.45 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. Dewi Sukma"
   },
   {
     "id": 14,
@@ -179,7 +218,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.45-15.50 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. Dewi Sukma"
   },
   {
     "id": 15,
@@ -192,7 +234,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.50-15.55 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 1",
+    "moderator": "Prof. Dr. Dewi Sukma"
   },
   {
     "id": 16,
@@ -205,7 +250,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.30-15.35 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 2",
+    "moderator": "Dr. Arya Widura"
   },
   {
     "id": 17,
@@ -218,7 +266,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.35-15.40 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 2",
+    "moderator": "Dr. Arya Widura"
   },
   {
     "id": 18,
@@ -231,7 +282,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.40-15.45 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 2",
+    "moderator": "Dr. Arya Widura"
   },
   {
     "id": 19,
@@ -244,7 +298,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.45-15.50 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 2",
+    "moderator": "Dr. Arya Widura"
   },
   {
     "id": 20,
@@ -257,7 +314,10 @@
     "date": "Selasa, 1 Desember 2026",
     "room": "Ballroom 3",
     "time": "15.50-15.55 WIB",
-    "session": null
+    "session": null,
+    "sesi": "Siang",
+    "bagian": "Bagian 2",
+    "moderator": "Dr. Arya Widura"
   },
   {
     "id": 21,

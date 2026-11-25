@@ -146,6 +146,9 @@ def read_manual_day_one():
             'type': 'Poster', 'day_num': 1, 'day_tag': 'Poster', 'date': date,
             'room': display_room, 'room_raw': display_room,
             'time': display_time, 'session': session,
+            'sesi': clean(participant.get('sesi') or data.get('sesi')),
+            'bagian': clean(participant.get('bagian') or data.get('bagian')),
+            'moderator': clean(participant.get('moderator') or data.get('moderator')),
         })
     return records
 
@@ -164,10 +167,13 @@ def build_blob(records):
     compact = []
     for r in records:
         d = str(r['day_num'])
-        compact.append([
+        row = [
             name_idx[r['name']], r['title'], scheme_idx[r['scheme']], r['day_num'],
             r['room_raw'], time_lists[d].index(r['time']),
-        ])
+        ]
+        if r['day_num'] == 1:
+            row.append({key: r.get(key, '') for key in ('sesi', 'bagian', 'moderator')})
+        compact.append(row)
     day_info = {}
     with open(MANUAL_DAY_ONE, encoding='utf-8') as f:
         manual_date = clean(json.load(f).get('tanggal'))
@@ -216,4 +222,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 

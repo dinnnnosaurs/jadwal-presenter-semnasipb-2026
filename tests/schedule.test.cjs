@@ -96,6 +96,7 @@ for (const first of ['manual', 'sheets']) {
     const edited = structuredClone(manual);
     edited.ruang = 'Lokasi manual';
     edited.jam = '11.00-11.30 WIB';
+    delete edited.peserta[0].jam; // Periksa jam umum pada peserta tanpa jam khusus.
     edited.peserta.push({ nama: 'Nama Manual Terakhir', judul: 'Judul <uji> manual', skema: 'Skema baru' });
     if (first === 'manual') {
       app.respondManual(edited); await flush(); app.respondSheets(sheetRecords());
@@ -108,6 +109,9 @@ for (const first of ['manual', 'sheets']) {
     assert.equal(records.filter(r => r.dayNum === 1).length, edited.peserta.length);
     assert.equal(records[0].room, 'Lokasi manual');
     assert.equal(records[0].time, '11.00-11.30 WIB');
+    assert.equal(records[0].posterSession, edited.peserta[0].sesi);
+    assert.equal(records[0].posterGroup, edited.peserta[0].bagian);
+    assert.equal(records[0].moderator, edited.peserta[0].moderator);
     assert.equal(records.at(-1).name, 'Peneliti Sheets 4');
     assert.deepEqual(records.map(r => r.id), records.map((_, i) => i + 1));
 
@@ -123,6 +127,8 @@ for (const first of ['manual', 'sheets']) {
     app.api.modal(edited.peserta.length + 1);
     assert.equal(app.element('modalName').textContent, 'Peneliti Sheets 2');
     assert.equal(app.element('modalZoomSection').hidden, false);
+    assert.equal(app.element('modalPosterMeta').hidden, true);
+    assert.equal(app.element('modalModerator').textContent, '');
 
     // Pemeriksaan berkala mempertahankan data manual yang sama.
     app.intervals[0]();
@@ -167,3 +173,64 @@ test('Template tetap sama dengan halaman terbit, selain data cadangan', () => {
   const expected = html.replace(/window\.JADWAL_DB=\{[^\n]+\};/, '/*__DATA_BLOB__*/');
   assert.equal(fs.readFileSync(path.join(root, 'template.html'), 'utf8'), expected);
 });
+
+test('Empat kelompok poster menampilkan sesi dan moderator pada kartu serta detail', async () => {
+  const app = createApp();
+  app.respondManual(manual); app.respondSheets(sheetRecords()); await flush();
+  for (const offset of [0, 5, 10, 15]) {
+    const participant = manual.peserta[offset];
+    const group = manual.peserta.slice(offset, offset + 5);
+    assert.equal(group.length, 5);
+    assert.ok(group.every(r => r.sesi === participant.sesi && r.bagian === participant.bagian));
+    assert.ok(group.every(r => r.moderator === participant.moderator));
+    app.api.state.day = 1; app.api.state.query = participant.nama.toLowerCase(); app.api.render();
+    const card = app.element('grid').innerHTML;
+    const session = 'Sesi ' + participant.sesi + ' · ' + participant.bagian;
+    const moderator = participant.moderator || 'Belum ditetapkan';
+    assert.ok(card.includes(session));
+    assert.ok(card.includes(moderator));
+    assert.doesNotMatch(card, /class="zoom-join/);
+    app.api.modal(offset + 1);
+    assert.equal(app.element('modalPosterMeta').hidden, false);
+    assert.equal(app.element('modalPosterSession').textContent, session);
+    assert.equal(app.element('modalModerator').textContent, moderator);
+  }
+  app.api.state.day = 2; app.api.state.query = ''; app.api.render();
+  assert.doesNotMatch(app.element('grid').innerHTML, /poster-session|poster-moderator/);
+  assert.match(app.element('grid').innerHTML, /class="zoom-join/);
+});
+
+test('Metadata dapat diedit, di-escape di kartu, dan tetap berupa teks di detail', async () => {
+  const app = createApp();
+  const edited = structuredClone(manual);
+  Object.assign(edited.peserta[0], {
+    sesi: 'Sesi Pagi <uji>', bagian: 'Bagian 1 & tamu',
+    moderator: '<img src=x onerror="alert(1)">'
+  });
+  app.respondManual(edited); app.respondSheets(sheetRecords()); await flush();
+  app.api.state.day = 1; app.api.state.query = edited.peserta[0].nama.toLowerCase(); app.api.render();
+  const card = app.element('grid').innerHTML;
+  assert.match(card, /Sesi Pagi &lt;uji&gt; · Bagian 1 &amp; tamu/);
+  assert.match(card, /&lt;img src=x onerror=&quot;alert\(1\)&quot;&gt;/);
+  assert.doesNotMatch(card, /<img|Sesi Sesi/);
+  app.api.modal(1);
+  assert.equal(app.element('modalModerator').textContent, edited.peserta[0].moderator);
+  assert.equal(app.element('modalPosterSession').textContent, 'Sesi Pagi <uji> · Bagian 1 & tamu');
+});
+
+test('Data cadangan mempertahankan sesi, bagian, dan moderator saat file manual gagal dimuat', async () => {
+  const app = createApp();
+  app.respondManual({}, false); app.respondSheets(sheetRecords()); await flush();
+  const posters = app.records().filter(r => r.dayNum === 1);
+  assert.equal(posters.length, manual.peserta.length);
+  posters.forEach((record, index) => {
+    const participant = manual.peserta[index];
+    assert.equal(record.posterSession, participant.sesi);
+    assert.equal(record.posterGroup, participant.bagian);
+    assert.equal(record.moderator, participant.moderator);
+  });
+  app.api.modal(6);
+  assert.equal(app.element('modalPosterSession').textContent, 'Sesi Pagi · Bagian 2');
+  assert.equal(app.element('modalModerator').textContent, 'Belum ditetapkan');
+});
+
