@@ -5,6 +5,7 @@ build.py — Regenerate database.json and index.html for "Jadwal Presenter".
 Jalankan ini kalau file Excel jadwal berubah (ada koreksi ruangan, jadwal baru,
 dsb). Letakkan file ini satu folder dengan:
   - template.html          (template halaman, sudah disediakan)
+  - jadwal-1-desember.json  (jadwal poster manual; tidak ditimpa dari Excel)
   - Jadwal_Presenter_Seminar_Nasional_2026.xlsx   (sumber data terbaru)
 
 Lalu jalankan:
@@ -31,6 +32,7 @@ SRC = os.path.join(HERE, 'Jadwal_Presenter_Seminar_Nasional_2026.xlsx')
 TEMPLATE = os.path.join(HERE, 'template.html')
 OUT_DB = os.path.join(HERE, 'database.json')
 OUT_HTML = os.path.join(HERE, 'index.html')
+MANUAL_DAY_ONE = os.path.join(HERE, 'jadwal-1-desember.json')
 
 DAY_META = {
     'Selasa, 1 Desember 2026': {'day_num': 1, 'tag': 'Poster', 'short': '1 Des', 'type': 'Poster'},
@@ -117,6 +119,37 @@ def parse(src_path):
     return records
 
 
+def read_manual_day_one():
+    """Data poster berasal dari GitHub, bukan dari sheet/Excel tanggal 1."""
+    with open(MANUAL_DAY_ONE, encoding='utf-8') as f:
+        data = json.load(f)
+    date = clean(data.get('tanggal'))
+    room = clean(data.get('ruang'))
+    time = clean(data.get('jam'))
+    participants = data.get('peserta')
+    if not date or not room or not time or not isinstance(participants, list):
+        raise ValueError('Isi tanggal, ruang, jam, dan peserta dalam jadwal-1-desember.json')
+    records = []
+    for i, participant in enumerate(participants, 1):
+        if not isinstance(participant, dict):
+            raise ValueError(f'Peserta manual nomor {i} tidak valid')
+        name = clean(participant.get('nama'))
+        title = clean(participant.get('judul'))
+        scheme = clean(participant.get('skema'))
+        if not name or not title or not scheme:
+            raise ValueError(f'Nama, judul, dan skema peserta manual nomor {i} wajib diisi')
+        raw_time = clean(participant.get('jam')) or time
+        display_time, session = format_time(raw_time)
+        display_room = clean(participant.get('ruang')) or room
+        records.append({
+            'id': i, 'name': name, 'title': title, 'scheme': scheme,
+            'type': 'Poster', 'day_num': 1, 'day_tag': 'Poster', 'date': date,
+            'room': display_room, 'room_raw': display_room,
+            'time': display_time, 'session': session,
+        })
+    return records
+
+
 def build_blob(records):
     names = sorted(set(r['name'] for r in records))
     name_idx = {n: i for i, n in enumerate(names)}
@@ -133,15 +166,17 @@ def build_blob(records):
         d = str(r['day_num'])
         compact.append([
             name_idx[r['name']], r['title'], scheme_idx[r['scheme']], r['day_num'],
-            r['room_raw'] if r['day_num'] != 1 else 0, time_lists[d].index(r['time']),
+            r['room_raw'], time_lists[d].index(r['time']),
         ])
     day_info = {}
+    with open(MANUAL_DAY_ONE, encoding='utf-8') as f:
+        manual_date = clean(json.load(f).get('tanggal'))
     for sheet_name, meta in DAY_META.items():
         matching = [r['date'] for r in records if r['day_num'] == meta['day_num']]
-        if matching:
-            day_info[str(meta['day_num'])] = {
-                'tag': meta['tag'], 'type': meta['type'], 'short': meta['short'], 'date': matching[0],
-            }
+        date = manual_date if meta['day_num'] == 1 else (matching[0] if matching else sheet_name)
+        day_info[str(meta['day_num'])] = {
+            'tag': meta['tag'], 'type': meta['type'], 'short': meta['short'], 'date': date,
+        }
     payload = {'names': names, 'schemes': schemes, 'times': time_lists, 'days': day_info, 'records': compact}
     return json.dumps(payload, ensure_ascii=False, separators=(',', ':'))
 
@@ -156,7 +191,9 @@ def main():
         sys.exit(1)
 
     print(f'Membaca {src} ...')
-    records = parse(src)
+    records = read_manual_day_one() + [r for r in parse(src) if r['day_num'] != 1]
+    for i, record in enumerate(records, 1):
+        record['id'] = i
     print(f'  -> {len(records)} entri jadwal ditemukan')
 
     public_records = [{k: v for k, v in r.items() if k != 'room_raw'} for r in records]
@@ -179,3 +216,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

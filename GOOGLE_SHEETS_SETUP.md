@@ -1,5 +1,7 @@
 # Menghubungkan Google Sheets dengan Jadwal Presenter Semnas IPB 2026
 
+> **Pembaruan 25 November 2026:** Jadwal **1 Desember (poster)** kini dikelola melalui [`jadwal-1-desember.json`](jadwal-1-desember.json) di GitHub. Hanya jadwal **2–4 Desember** yang diambil dari Google Sheets. Baca [panduan edit tanggal 1](EDIT_JADWAL_1_DESEMBER.md).
+
 Integrasi disiapkan untuk:
 - Website: https://dinnnnosaurs.github.io/jadwal-presenter-semnasipb-2026/
 - Google Sheets: https://docs.google.com/spreadsheets/d/1SXgXv9Le3ym3Q3VYPkLlsFMYTr1bJyLk2mForCRERmY/edit
@@ -32,7 +34,7 @@ Jika kebijakan akun Google organisasi tidak mengizinkan akses "Anyone", metode i
 ## 3. Cara kerja
 - Halaman menampilkan data bawaan HTML sebagai cadangan.
 - Setelah situs dimuat, JavaScript meminta jadwal terkini ke Apps Script.
-- Pencarian, penyaring tanggal, kartu, ruang, jam sesi, dan modal menggunakan data terbaru.
+- Pencarian, penyaring tanggal, kartu, ruang, jam sesi, dan modal menggabungkan data manual tanggal 1 dengan data terbaru dari Sheets tanggal 2–4.
 - Pengecekan diulang setiap **3 menit** selama halaman terbuka.
 - Jika sumber data tidak bisa dibaca, situs tetap menampilkan data terakhir yang berhasil digunakan.
 - Mengubah **isi spreadsheet** tidak mengharuskan perubahan atau deploy ulang kode GitHub/Apps Script.
@@ -45,7 +47,7 @@ Jika kebijakan akun Google organisasi tidak mengizinkan akses "Anyone", metode i
 - Jangan masukkan informasi pribadi atau rahasia di kolom A–D atau metadata ruang/jam karena data tersebut akan publik.
 
 ## Catatan
-Halaman publik *belum* menggunakan integrasi hingga URL Web App diisi dan PR digabungkan. Jangan langsung mengganti \`main\` sebelum memastikan Apps Script berfungsi. Tautan Zoom tetap mengikuti keadaan lama di situs; kolom E pada spreadsheet bukan sumber Zoom.
+URL Apps Script sudah terpasang pada halaman publik. Tanggal 1 dari respons Sheets diabaikan agar tidak menimpa data manual GitHub. Kolom E pada spreadsheet bukan sumber Zoom.
 
 ## Status koneksi (9 November 2026)
 
@@ -53,3 +55,4 @@ Endpoint Apps Script yang sudah diuji:
 `https://script.google.com/macros/s/AKfycbz8kZCJJ6FRi8z6IKtYyA8u5cuKYqI8rgmvWA_J0tVFkZgdQvUMFuAqvLDMqDl8n_5q/exec`
 
 Pengujian JSONP `?callback=verifySemnasIPB` berhasil dengan `ok:true`, total **695** data valid (20, 279, 279, 117). URL ini sudah dipasang dalam `index.html` pada cabang integrasi. Pengujian data berhasil, namun perubahan langsung pada spreadsheet belum dilakukan karena perlu menghindari mengubah data acara.
+

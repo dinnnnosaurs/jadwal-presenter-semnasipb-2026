@@ -372,11 +372,15 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
       tag: day.tag,
       type: day.type,
       date: day.date,
-      room: dayNum === 1 ? 'Ballroom 3' : ('Room ' + room),
+      room: dayNum === 1 ? (typeof room === 'string' ? room : 'Ballroom 3') : ('Room ' + room),
       time: time,
       searchText: (title + ' ' + name).toLowerCase()
     };
   });
+
+  // Tanggal 1 dikelola di GitHub; tanggal 2–4 diperbarui dari Google Sheets.
+  var jadwalManualHariPertama = ALL.filter(function(r){ return r.dayNum === 1; });
+  var jadwalHariLain = ALL.filter(function(r){ return r.dayNum !== 1; });
 
   // SATU TAUTAN ZOOM UNTUK SELURUH JADWAL PRESENTASI.
   // 'link_zoom' = tombol terlihat dan ber-hover, namun tidak bisa diklik.
@@ -625,7 +629,72 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     render();
   });
 
-  // === INTEGRASI GOOGLE SHEETS (perubahan hanya pada sumber data) ===
+  // === JADWAL MANUAL 1 DESEMBER (edit file ini langsung di GitHub) ===
+  var JADWAL_MANUAL_URL = './jadwal-1-desember.json';
+  var jadwalManualSedangBerjalan = false;
+
+  function terapkanJadwalGabungan() {
+    // ID selalu mengikuti posisi gabungan agar detail kartu tetap benar.
+    ALL = jadwalManualHariPertama.concat(jadwalHariLain).map(function(r, index){
+      return Object.assign({}, r, { id: index + 1 });
+    });
+    el.heroTotalCount.textContent = ALL.length + ' entri jadwal';
+    render();
+  }
+
+  function teksJadwalManual(value) {
+    return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
+  }
+
+  function bacaJadwalManual(data) {
+    if (!data || !Array.isArray(data.peserta)) {
+      throw new Error('File jadwal manual harus memuat daftar peserta.');
+    }
+    var tanggal = teksJadwalManual(data.tanggal);
+    var ruang = teksJadwalManual(data.ruang);
+    var jam = teksJadwalManual(data.jam);
+    if (!tanggal || !ruang || !jam) {
+      throw new Error('Tanggal, ruang, dan jam jadwal manual wajib diisi.');
+    }
+    return data.peserta.map(function(peserta, index){
+      if (!peserta || typeof peserta !== 'object') {
+        throw new Error('Peserta manual nomor ' + (index + 1) + ' tidak valid.');
+      }
+      var nama = teksJadwalManual(peserta.nama);
+      var judul = teksJadwalManual(peserta.judul);
+      var skema = teksJadwalManual(peserta.skema);
+      if (!nama || !judul || !skema) {
+        throw new Error('Nama, judul, dan skema wajib diisi pada peserta manual nomor ' + (index + 1));
+      }
+      return {
+        name: nama, title: judul, scheme: skema, dayNum: 1,
+        tag: DAYS['1'].tag, type: DAYS['1'].type, date: tanggal,
+        room: teksJadwalManual(peserta.ruang) || ruang,
+        time: teksJadwalManual(peserta.jam) || jam,
+        searchText: (judul + ' ' + nama).toLowerCase()
+      };
+    });
+  }
+
+  async function muatJadwalManual() {
+    if (jadwalManualSedangBerjalan) return;
+    jadwalManualSedangBerjalan = true;
+    try {
+      var response = await fetch(JADWAL_MANUAL_URL, { cache: 'no-store' });
+      if (!response.ok) throw new Error('File jadwal manual tidak dapat dibaca.');
+      var baru = bacaJadwalManual(await response.json());
+      jadwalManualHariPertama = baru;
+      terapkanJadwalGabungan();
+      console.info('[Semnas IPB] Jadwal manual 1 Desember diperbarui:', baru.length);
+    } catch (error) {
+      console.warn('[Semnas IPB] Jadwal manual gagal dibaca; data 1 Desember terakhir tetap digunakan.', error);
+    } finally {
+      jadwalManualSedangBerjalan = false;
+    }
+  }
+  // === AKHIR JADWAL MANUAL 1 DESEMBER ===
+
+  // === INTEGRASI GOOGLE SHEETS (khusus tanggal 2–4 Desember) ===
   // Salin URL deployment Web App /exec dari google-apps-script/Code.gs.
   // Jika belum diatur atau layanan gagal, 695 jadwal bawaan tetap ditampilkan.
   var JADWAL_SYNC_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8kZCJJ6FRi8z6IKtYyA8u5cuKYqI8rgmvWA_J0tVFkZgdQvUMFuAqvLDMqDl8n_5q/exec';
@@ -675,11 +744,16 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
       if (!hasil || hasil.ok !== true || !Array.isArray(hasil.records) || !hasil.records.length) {
         throw new Error('Respons jadwal kosong atau tidak valid.');
       }
-      // Validasi SELURUH catatan sebelum mengganti data yang tampil.
-      var jadwalBaru = hasil.records.map(function(baris, index) {
+      // Abaikan tanggal 1 dari Sheets, termasuk baris poster yang tidak lengkap.
+      var catatanHariLain = hasil.records.filter(function(baris){
+        return Number(baris.hari) !== 1;
+      });
+      if (!catatanHariLain.length) throw new Error('Jadwal 2–4 Desember kosong.');
+      // Validasi seluruh catatan 2–4 sebelum mengganti data yang tampil.
+      var jadwalBaru = catatanHariLain.map(function(baris, index) {
         var nHari = Number(baris.hari);
         var hari = DAYS[String(nHari)];
-        if (!hari || !baris.nama || !baris.judul || !baris.skema || !baris.ruang || !baris.jam) {
+        if (!hari || nHari < 2 || nHari > 4 || !baris.nama || !baris.judul || !baris.skema || !baris.ruang || !baris.jam) {
           throw new Error('Data tidak lengkap pada presenter nomor ' + (index + 1));
         }
         var nama = String(baris.nama), judul = String(baris.judul);
@@ -698,10 +772,9 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
         };
       });
 
-      ALL = jadwalBaru;
-      el.heroTotalCount.textContent = ALL.length + ' entri jadwal';
-      render();
-      console.info('[Semnas IPB] Jadwal Google Sheets diperbarui:', ALL.length, hasil.perHari);
+      jadwalHariLain = jadwalBaru;
+      terapkanJadwalGabungan();
+      console.info('[Semnas IPB] Jadwal Google Sheets 2–4 Desember diperbarui:', jadwalBaru.length);
     } catch (error) {
       console.warn('[Semnas IPB] Sinkronisasi gagal; data lama tetap digunakan.', error);
     } finally {
@@ -709,9 +782,13 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
     }
   }
 
-  // Memperbarui saat halaman dibuka dan setiap tiga menit saat masih terbuka.
+  // Kedua sumber diperbarui secara terpisah; urutan selesainya tidak saling menimpa.
+  muatJadwalManual();
   sinkronkanJadwalGoogleSheets();
-  setInterval(sinkronkanJadwalGoogleSheets, 3 * 60 * 1000);
+  setInterval(function(){
+    muatJadwalManual();
+    sinkronkanJadwalGoogleSheets();
+  }, 3 * 60 * 1000);
   // === AKHIR INTEGRASI GOOGLE SHEETS ===
 
   render();
@@ -719,3 +796,4 @@ window.JADWAL_DB={"names":["Abdul Munif","Achmad Farajallah","Adi Firmansyah","A
 </script>
 </body>
 </html>
+

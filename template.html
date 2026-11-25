@@ -171,9 +171,14 @@ a{color:inherit;}
 .scheme-row .field-label{margin-bottom:0;}
 .card-meta{background:var(--card-subbox);margin-top:auto;padding:14px 18px;border-top:1px solid var(--border-softer);}
 .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:10px;margin-top:10px;border-top:1px solid var(--border-soft);}
-.zoom-row{display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:.74rem;color:var(--text-secondary);font-weight:600;}
-.zoom-row .icon{color:var(--text-muted);}
-.zoom-pending{color:var(--gold-700);background:var(--gold-bg);padding:2px 9px;border-radius:var(--radius-pill);font-size:.68rem;font-weight:700;margin-left:auto;}
+.zoom-row{margin-top:12px;padding-top:12px;border-top:1px solid var(--border-soft);width:100%;}
+.zoom-join{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:0;border-radius:12px;padding:12px 14px;background:var(--navy-700);color:#fff;text-decoration:none;font-size:.82rem;font-weight:700;line-height:1.3;transition:background .18s,box-shadow .18s,transform .18s;}
+.zoom-join:hover,.zoom-join:focus-visible{background:var(--navy-900);color:#fff;box-shadow:0 7px 16px rgba(15,42,71,.26);transform:translateY(-2px);}
+.zoom-join:focus-visible{outline:2px solid var(--gold-600);outline-offset:3px;}
+.zoom-join[hidden]{display:none;}
+.zoom-join-placeholder{cursor:not-allowed;}
+.modal-zoom .zoom-join{margin-top:14px;width:100%;}
+@media(prefers-reduced-motion:reduce){.zoom-join{transition:none;}.zoom-join:hover,.zoom-join:focus-visible{transform:none;}}
 
 /* Empty state */
 .empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-secondary);}
@@ -204,9 +209,23 @@ a{color:inherit;}
 .modal-zoom-title .icon{color:var(--gold-700);}
 .modal-zoom p{font-size:.8rem;color:var(--text-secondary);margin:0;line-height:1.55;}
 
-/* Footer */
-.site-footer{border-top:1px solid var(--border-softer);padding:26px clamp(16px,4vw,32px) calc(26px + env(safe-area-inset-bottom,0px));text-align:center;}
-.site-footer p{font-size:.78rem;color:var(--text-muted);margin:0;}
+/* Footer — mengikuti desain Seminar Nasional Hasil Penelitian IPB 2026 */
+.site-footer{background:#102c50;color:#dce8f5;}
+.site-footer-inner{max-width:1240px;margin:0 auto;padding:38px 32px 42px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:72px;}
+.site-footer-title{font-size:clamp(1.35rem,2.1vw,1.65rem);font-weight:800;line-height:1.25;letter-spacing:-.02em;color:#fff;margin:0 0 20px;}
+.site-footer-heading{font-size:.78rem;font-weight:700;color:#dce8f5;margin:0 0 4px;}
+.site-footer-text{font-size:.8rem;line-height:1.8;color:#dce8f5;margin:0;}
+.site-footer-contact{display:flex;flex-direction:column;align-items:flex-start;gap:0;margin-top:19px;}
+.site-footer-contact a{font-size:.82rem;line-height:1.8;color:#ffda86;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere;}
+.site-footer-contact a:hover{color:#fff2d7;}
+.site-footer-contact a:focus-visible{outline:2px solid #ffda86;outline-offset:3px;}
+.site-footer-bottom{border-top:1px solid rgba(220,232,245,.15);padding:17px 24px calc(17px + env(safe-area-inset-bottom,0px));text-align:center;}
+.site-footer-bottom p{font-size:.63rem;line-height:1.6;color:#cbdcf0;margin:0;}
+@media(max-width:760px){
+  .site-footer-inner{grid-template-columns:1fr;gap:30px;padding:32px 22px 36px;}
+  .site-footer-title{font-size:1.35rem;margin-bottom:16px;}
+  .site-footer-contact{margin-top:14px;}
+}
 </style>
 </head>
 <body>
@@ -281,7 +300,25 @@ a{color:inherit;}
 </section>
 
 <footer class="site-footer">
-  <p>Data presenter Seminar Nasional Hasil Penelitian 2026 — IPB University.</p>
+  <div class="site-footer-inner">
+    <div class="site-footer-about">
+      <h2 class="site-footer-title">Seminar Nasional Hasil Penelitian IPB 2026</h2>
+      <p class="site-footer-heading">Dikelola oleh:</p>
+      <p class="site-footer-text">Direktorat Riset dan Inovasi (DRI) IPB University</p>
+    </div>
+    <div class="site-footer-secretariat">
+      <h3 class="site-footer-heading">Sekretariat Panitia</h3>
+      <p class="site-footer-text">Gedung Andi Hakim Nasoetion, Lantai 5</p>
+      <p class="site-footer-text">Kampus IPB Dramaga, Bogor, Indonesia</p>
+      <div class="site-footer-contact">
+        <a href="mailto:dit.ri@apps.ipb.ac.id">dit.ri@apps.ipb.ac.id</a>
+        <a href="tel:+6285163516225">+62 851-6351-6225</a>
+      </div>
+    </div>
+  </div>
+  <div class="site-footer-bottom">
+    <p>© Seminar Nasional Hasil Penelitian IPB 2026 · Direktorat Riset dan Inovasi, IPB University.</p>
+  </div>
 </footer>
 
 <div class="modal-backdrop" id="modalBackdrop" hidden>
@@ -304,9 +341,9 @@ a{color:inherit;}
         <div class="modal-field"><div class="field-label">Jam sesi</div><div class="field-value" id="modalTime"></div></div>
       </div>
     </div>
-    <div class="modal-zoom">
+    <div class="modal-zoom" id="modalZoomSection">
       <div class="modal-zoom-title"><svg class="icon" width="16" height="16"><use href="#icon-video"></use></svg> Tautan Zoom</div>
-      <p>Akan diumumkan mendekati hari pelaksanaan seminar. Pantau kanal resmi seminar untuk pembaruan tautan bergabung.</p>
+      <a id="modalZoomLink" class="zoom-join" target="_blank" rel="noopener noreferrer" hidden>Join Zoom</a>
     </div>
   </div>
 </div>
@@ -335,11 +372,47 @@ a{color:inherit;}
       tag: day.tag,
       type: day.type,
       date: day.date,
-      room: dayNum === 1 ? 'Ballroom 3' : ('Room ' + room),
+      room: dayNum === 1 ? (typeof room === 'string' ? room : 'Ballroom 3') : ('Room ' + room),
       time: time,
       searchText: (title + ' ' + name).toLowerCase()
     };
   });
+
+  // Tanggal 1 dikelola di GitHub; tanggal 2–4 diperbarui dari Google Sheets.
+  var jadwalManualHariPertama = ALL.filter(function(r){ return r.dayNum === 1; });
+  var jadwalHariLain = ALL.filter(function(r){ return r.dayNum !== 1; });
+
+  // SATU TAUTAN ZOOM UNTUK SELURUH JADWAL PRESENTASI.
+  // 'link_zoom' = tombol terlihat dan ber-hover, namun tidak bisa diklik.
+  // Nanti cukup ganti nilainya dengan URL Zoom HTTPS yang sebenarnya.
+  // Google Sheets dan Google Apps Script tidak perlu diubah.
+  var ZOOM_URL_SEMINAR = 'https://ipb-university.zoom.us/j/98041329762?pwd=q3bhcRnjqV6zO06pP3tRPmK1HVCHa1.1';
+
+  function getZoomHref(){
+    var raw = ZOOM_URL_SEMINAR.trim();
+    if(!raw) return '';
+    try {
+      var u = new URL(raw);
+      return u.protocol === 'https:' ? u.href : '';
+    } catch(e) {
+      return '';
+    }
+  }
+  function isPoster(r){
+    return String(r.type || '').toLowerCase() === 'poster' ||
+           String(r.tag || '').toLowerCase() === 'poster';
+  }
+
+  function zoomButtonHtml(){
+    var placeholder = ZOOM_URL_SEMINAR.trim() === 'link_zoom';
+    var href = getZoomHref();
+    if(!placeholder && !href) return '';
+    return '<a class="zoom-join'+(placeholder ? ' zoom-join-placeholder' : '')+'"'+
+      (placeholder
+        ? ' aria-disabled="true" title="Tautan Zoom belum tersedia, akan segera diumumkan"'
+        : ' href="'+escapeHtml(href)+'" target="_blank" rel="noopener noreferrer"')+'>'+
+      '<svg class="icon" width="16" height="16" aria-hidden="true"><use href="#icon-video"></use></svg>Join Zoom</a>';
+  }
 
   var PAGE_SIZE = 8;
   var state = { query: '', day: 'all', page: 1 };
@@ -370,7 +443,7 @@ a{color:inherit;}
     var html = '<button class="pill active" data-day="all">Semua tanggal</button>';
     DAY_ORDER.forEach(function(k){
       var d = DAYS[k];
-      html += '<button class="pill" data-day="'+k+'">'+escapeHtml(d.short)+' \u00b7 '+escapeHtml(d.tag)+'</button>';
+      html += '<button class="pill" data-day="'+k+'">'+escapeHtml(d.short)+' \u00b7 '+escapeHtml(d.type === 'Poster' ? 'ICC' : d.type === 'Presentasi' ? 'Zoom' : d.tag)+'</button>';
     });
     el.filterPills.innerHTML = html;
   })();
@@ -406,7 +479,7 @@ a{color:inherit;}
             '<div><div class="field-label">Ruang</div><div class="field-value">'+escapeHtml(r.room)+'</div></div>'+
             '<div><div class="field-label">Jam sesi</div><div class="field-value">'+escapeHtml(r.time)+'</div></div>'+
           '</div>'+
-          '<div class="zoom-row"><svg class="icon" width="14" height="14"><use href="#icon-video"></use></svg>Link Zoom<span class="zoom-pending">Akan diumumkan</span></div>'+
+          (isPoster(r) ? '' : '<div class="zoom-row">'+zoomButtonHtml()+'</div>')+
         '</div>'+
       '</div>'
     );
@@ -472,6 +545,12 @@ a{color:inherit;}
     var cards = el.grid.querySelectorAll('.card');
     for(var i=0;i<cards.length;i++){
       cards[i].addEventListener('click', onCardActivate);
+      // Klik tautan Zoom langsung membuka Zoom, bukan modal kartu.
+      var tombolLangsung = cards[i].querySelector('.zoom-join');
+      if(tombolLangsung){
+        tombolLangsung.addEventListener('click', function(e){ e.stopPropagation(); });
+        tombolLangsung.addEventListener('keydown', function(e){ e.stopPropagation(); });
+      }
       cards[i].addEventListener('keydown', function(e){
         if(e.key==='Enter' || e.key===' '){ e.preventDefault(); onCardActivate(e); }
       });
@@ -494,6 +573,19 @@ a{color:inherit;}
     document.getElementById('modalDate').textContent = r.date;
     document.getElementById('modalRoom').textContent = r.room;
     document.getElementById('modalTime').textContent = r.time;
+    var poster = isPoster(r);
+    var placeholderZoom = !poster && ZOOM_URL_SEMINAR.trim() === 'link_zoom';
+    var hrefZoom = poster ? '' : getZoomHref();
+    var tombolZoom = document.getElementById('modalZoomLink');
+    document.getElementById('modalZoomSection').hidden = poster;
+    tombolZoom.hidden = poster || (!placeholderZoom && !hrefZoom);
+    tombolZoom.textContent = 'Join Zoom';
+    tombolZoom.classList.toggle('zoom-join-placeholder', placeholderZoom);
+    tombolZoom.title = placeholderZoom ? 'Tautan Zoom belum tersedia, akan segera diumumkan' : 'Buka Zoom di tab baru';
+    if(placeholderZoom) tombolZoom.setAttribute('aria-disabled', 'true');
+    else tombolZoom.removeAttribute('aria-disabled');
+    if(hrefZoom) tombolZoom.href = hrefZoom;
+    else tombolZoom.removeAttribute('href');
     el.modalBackdrop.hidden = false;
     document.body.style.overflow = 'hidden';
     el.modalClose.focus();
@@ -537,8 +629,171 @@ a{color:inherit;}
     render();
   });
 
+  // === JADWAL MANUAL 1 DESEMBER (edit file ini langsung di GitHub) ===
+  var JADWAL_MANUAL_URL = './jadwal-1-desember.json';
+  var jadwalManualSedangBerjalan = false;
+
+  function terapkanJadwalGabungan() {
+    // ID selalu mengikuti posisi gabungan agar detail kartu tetap benar.
+    ALL = jadwalManualHariPertama.concat(jadwalHariLain).map(function(r, index){
+      return Object.assign({}, r, { id: index + 1 });
+    });
+    el.heroTotalCount.textContent = ALL.length + ' entri jadwal';
+    render();
+  }
+
+  function teksJadwalManual(value) {
+    return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
+  }
+
+  function bacaJadwalManual(data) {
+    if (!data || !Array.isArray(data.peserta)) {
+      throw new Error('File jadwal manual harus memuat daftar peserta.');
+    }
+    var tanggal = teksJadwalManual(data.tanggal);
+    var ruang = teksJadwalManual(data.ruang);
+    var jam = teksJadwalManual(data.jam);
+    if (!tanggal || !ruang || !jam) {
+      throw new Error('Tanggal, ruang, dan jam jadwal manual wajib diisi.');
+    }
+    return data.peserta.map(function(peserta, index){
+      if (!peserta || typeof peserta !== 'object') {
+        throw new Error('Peserta manual nomor ' + (index + 1) + ' tidak valid.');
+      }
+      var nama = teksJadwalManual(peserta.nama);
+      var judul = teksJadwalManual(peserta.judul);
+      var skema = teksJadwalManual(peserta.skema);
+      if (!nama || !judul || !skema) {
+        throw new Error('Nama, judul, dan skema wajib diisi pada peserta manual nomor ' + (index + 1));
+      }
+      return {
+        name: nama, title: judul, scheme: skema, dayNum: 1,
+        tag: DAYS['1'].tag, type: DAYS['1'].type, date: tanggal,
+        room: teksJadwalManual(peserta.ruang) || ruang,
+        time: teksJadwalManual(peserta.jam) || jam,
+        searchText: (judul + ' ' + nama).toLowerCase()
+      };
+    });
+  }
+
+  async function muatJadwalManual() {
+    if (jadwalManualSedangBerjalan) return;
+    jadwalManualSedangBerjalan = true;
+    try {
+      var response = await fetch(JADWAL_MANUAL_URL, { cache: 'no-store' });
+      if (!response.ok) throw new Error('File jadwal manual tidak dapat dibaca.');
+      var baru = bacaJadwalManual(await response.json());
+      jadwalManualHariPertama = baru;
+      terapkanJadwalGabungan();
+      console.info('[Semnas IPB] Jadwal manual 1 Desember diperbarui:', baru.length);
+    } catch (error) {
+      console.warn('[Semnas IPB] Jadwal manual gagal dibaca; data 1 Desember terakhir tetap digunakan.', error);
+    } finally {
+      jadwalManualSedangBerjalan = false;
+    }
+  }
+  // === AKHIR JADWAL MANUAL 1 DESEMBER ===
+
+  // === INTEGRASI GOOGLE SHEETS (khusus tanggal 2–4 Desember) ===
+  // Salin URL deployment Web App /exec dari google-apps-script/Code.gs.
+  // Jika belum diatur atau layanan gagal, 695 jadwal bawaan tetap ditampilkan.
+  var JADWAL_SYNC_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8kZCJJ6FRi8z6IKtYyA8u5cuKYqI8rgmvWA_J0tVFkZgdQvUMFuAqvLDMqDl8n_5q/exec';
+  var jadwalSyncSedangBerjalan = false;
+  var jadwalSyncCounter = 0;
+
+  function unduhJadwalDariAppsScript() {
+    return new Promise(function(resolve, reject) {
+      if (!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(JADWAL_SYNC_APPS_SCRIPT_URL)) {
+        reject(new Error('URL Apps Script belum diatur. Baca GOOGLE_SHEETS_SETUP.md.'));
+        return;
+      }
+
+      // JSONP menghindari kendala CORS antara GitHub Pages dan Apps Script.
+      var callback = '__semnasIpbJadwal' + (++jadwalSyncCounter);
+      var script = document.createElement('script');
+      var timer = null;
+      var selesai = false;
+      function tutup(error, data) {
+        if (selesai) return;
+        selesai = true;
+        clearTimeout(timer);
+        script.remove();
+        try { delete window[callback]; } catch (e) { window[callback] = undefined; }
+        if (error) reject(error);
+        else resolve(data);
+      }
+
+      window[callback] = function(data) { tutup(null, data); };
+      script.onerror = function() { tutup(new Error('Gagal membaca Google Apps Script.')); };
+      timer = setTimeout(function() { tutup(new Error('Batas waktu permintaan (20 detik).')); }, 20000);
+
+      var url = new URL(JADWAL_SYNC_APPS_SCRIPT_URL);
+      url.searchParams.set('callback', callback);
+      url.searchParams.set('_', String(Date.now()));
+      script.src = url.toString();
+      document.head.appendChild(script);
+    });
+  }
+
+  async function sinkronkanJadwalGoogleSheets() {
+    if (JADWAL_SYNC_APPS_SCRIPT_URL.indexOf('GANTI_DENGAN_') === 0 || jadwalSyncSedangBerjalan) return;
+    jadwalSyncSedangBerjalan = true;
+
+    try {
+      var hasil = await unduhJadwalDariAppsScript();
+      if (!hasil || hasil.ok !== true || !Array.isArray(hasil.records) || !hasil.records.length) {
+        throw new Error('Respons jadwal kosong atau tidak valid.');
+      }
+      // Abaikan tanggal 1 dari Sheets, termasuk baris poster yang tidak lengkap.
+      var catatanHariLain = hasil.records.filter(function(baris){
+        return Number(baris.hari) !== 1;
+      });
+      if (!catatanHariLain.length) throw new Error('Jadwal 2–4 Desember kosong.');
+      // Validasi seluruh catatan 2–4 sebelum mengganti data yang tampil.
+      var jadwalBaru = catatanHariLain.map(function(baris, index) {
+        var nHari = Number(baris.hari);
+        var hari = DAYS[String(nHari)];
+        if (!hari || nHari < 2 || nHari > 4 || !baris.nama || !baris.judul || !baris.skema || !baris.ruang || !baris.jam) {
+          throw new Error('Data tidak lengkap pada presenter nomor ' + (index + 1));
+        }
+        var nama = String(baris.nama), judul = String(baris.judul);
+        return {
+          id: index + 1,
+          name: nama,
+          title: judul,
+          scheme: String(baris.skema),
+          dayNum: nHari,
+          tag: hari.tag,
+          type: hari.type,
+          date: hari.date,
+          room: String(baris.ruang),
+          time: String(baris.jam),
+          searchText: (judul + ' ' + nama).toLowerCase()
+        };
+      });
+
+      jadwalHariLain = jadwalBaru;
+      terapkanJadwalGabungan();
+      console.info('[Semnas IPB] Jadwal Google Sheets 2–4 Desember diperbarui:', jadwalBaru.length);
+    } catch (error) {
+      console.warn('[Semnas IPB] Sinkronisasi gagal; data lama tetap digunakan.', error);
+    } finally {
+      jadwalSyncSedangBerjalan = false;
+    }
+  }
+
+  // Kedua sumber diperbarui secara terpisah; urutan selesainya tidak saling menimpa.
+  muatJadwalManual();
+  sinkronkanJadwalGoogleSheets();
+  setInterval(function(){
+    muatJadwalManual();
+    sinkronkanJadwalGoogleSheets();
+  }, 3 * 60 * 1000);
+  // === AKHIR INTEGRASI GOOGLE SHEETS ===
+
   render();
 })();
 </script>
 </body>
 </html>
+
