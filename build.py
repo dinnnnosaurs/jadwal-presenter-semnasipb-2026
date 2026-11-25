@@ -148,7 +148,6 @@ def read_manual_day_one():
             'time': display_time, 'session': session,
             'sesi': clean(participant.get('sesi') or data.get('sesi')),
             'bagian': clean(participant.get('bagian') or data.get('bagian')),
-            'moderator': clean(participant.get('moderator') or data.get('moderator')),
         })
     return records
 
@@ -172,7 +171,7 @@ def build_blob(records):
             r['room_raw'], time_lists[d].index(r['time']),
         ]
         if r['day_num'] == 1:
-            row.append({key: r.get(key, '') for key in ('sesi', 'bagian', 'moderator')})
+            row.append({key: r.get(key, '') for key in ('sesi', 'bagian')})
         compact.append(row)
     day_info = {}
     with open(MANUAL_DAY_ONE, encoding='utf-8') as f:

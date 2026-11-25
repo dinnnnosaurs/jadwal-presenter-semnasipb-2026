@@ -12,8 +12,7 @@
     "time": "10.45-10.50 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. drh Huda Salahuddin D"
+    "bagian": "Bagian 1"
   },
   {
     "id": 2,
@@ -28,8 +27,7 @@
     "time": "10.50-10.55 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. drh Huda Salahuddin D"
+    "bagian": "Bagian 1"
   },
   {
     "id": 3,
@@ -44,8 +42,7 @@
     "time": "10.55-11.00 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. drh Huda Salahuddin D"
+    "bagian": "Bagian 1"
   },
   {
     "id": 4,
@@ -60,8 +57,7 @@
     "time": "11.00-11.05 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. drh Huda Salahuddin D"
+    "bagian": "Bagian 1"
   },
   {
     "id": 5,
@@ -76,8 +72,7 @@
     "time": "11.05-11.10 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. drh Huda Salahuddin D"
+    "bagian": "Bagian 1"
   },
   {
     "id": 6,
@@ -92,8 +87,7 @@
     "time": "10.45-10.50 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 2",
-    "moderator": ""
+    "bagian": "Bagian 2"
   },
   {
     "id": 7,
@@ -108,8 +102,7 @@
     "time": "10.50-10.55 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 2",
-    "moderator": ""
+    "bagian": "Bagian 2"
   },
   {
     "id": 8,
@@ -124,8 +117,7 @@
     "time": "10.55-11.00 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 2",
-    "moderator": ""
+    "bagian": "Bagian 2"
   },
   {
     "id": 9,
@@ -140,8 +132,7 @@
     "time": "11.00-11.05 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 2",
-    "moderator": ""
+    "bagian": "Bagian 2"
   },
   {
     "id": 10,
@@ -156,8 +147,7 @@
     "time": "11.05-11.10 WIB",
     "session": null,
     "sesi": "Pagi",
-    "bagian": "Bagian 2",
-    "moderator": ""
+    "bagian": "Bagian 2"
   },
   {
     "id": 11,
@@ -172,8 +162,7 @@
     "time": "15.30-15.35 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. Dewi Sukma"
+    "bagian": "Bagian 1"
   },
   {
     "id": 12,
@@ -188,8 +177,7 @@
     "time": "15.35-15.40 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. Dewi Sukma"
+    "bagian": "Bagian 1"
   },
   {
     "id": 13,
@@ -204,8 +192,7 @@
     "time": "15.40-15.45 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. Dewi Sukma"
+    "bagian": "Bagian 1"
   },
   {
     "id": 14,
@@ -220,8 +207,7 @@
     "time": "15.45-15.50 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. Dewi Sukma"
+    "bagian": "Bagian 1"
   },
   {
     "id": 15,
@@ -236,8 +222,7 @@
     "time": "15.50-15.55 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 1",
-    "moderator": "Prof. Dr. Dewi Sukma"
+    "bagian": "Bagian 1"
   },
   {
     "id": 16,
@@ -252,8 +237,7 @@
     "time": "15.30-15.35 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 2",
-    "moderator": "Dr. Arya Widura"
+    "bagian": "Bagian 2"
   },
   {
     "id": 17,
@@ -268,8 +252,7 @@
     "time": "15.35-15.40 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 2",
-    "moderator": "Dr. Arya Widura"
+    "bagian": "Bagian 2"
   },
   {
     "id": 18,
@@ -284,8 +267,7 @@
     "time": "15.40-15.45 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 2",
-    "moderator": "Dr. Arya Widura"
+    "bagian": "Bagian 2"
   },
   {
     "id": 19,
@@ -300,8 +282,7 @@
     "time": "15.45-15.50 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 2",
-    "moderator": "Dr. Arya Widura"
+    "bagian": "Bagian 2"
   },
   {
     "id": 20,
@@ -316,8 +297,7 @@
     "time": "15.50-15.55 WIB",
     "session": null,
     "sesi": "Siang",
-    "bagian": "Bagian 2",
-    "moderator": "Dr. Arya Widura"
+    "bagian": "Bagian 2"
   },
   {
     "id": 21,

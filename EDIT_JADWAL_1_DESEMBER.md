@@ -14,7 +14,7 @@ Google Sheets tidak akan mengganti data manual ini.
    - `jam`: waktu yang berlaku untuk seluruh peserta poster.
    - `peserta`: daftar peneliti, masing-masing berisi `nama`, `judul`, dan `skema`.
    - Pada masing-masing peserta, `sesi` diisi `Pagi` atau `Siang`, `bagian` diisi
-     `Bagian 1` atau `Bagian 2`, dan `moderator` diisi nama moderator.
+     `Bagian 1` atau `Bagian 2`.
 4. Simpan melalui **Commit changes**.
 5. Tunggu penerbitan GitHub Pages selesai, lalu muat ulang laman jadwal.
 
@@ -37,8 +37,7 @@ Contoh struktur (ilustrasi, bukan pengganti seluruh daftar peserta):
       "skema": "Nama skema penelitian",
       "jam": "10.45-10.50 WIB",
       "sesi": "Pagi",
-      "bagian": "Bagian 1",
-      "moderator": "Nama moderator"
+      "bagian": "Bagian 1"
     }
   ]
 }
@@ -58,9 +57,8 @@ tetap memakai lokasi dan jam pada bagian atas file.
 }
 ```
 
-Sesi, bagian, dan moderator tampil pada kartu serta detail jadwal poster.
-Jika moderator belum diketahui, isi `"moderator": ""`; laman menampilkan
-**Belum ditetapkan**. Pembagian saat ini terdiri atas dua bagian pagi dan dua
+Sesi dan bagian tampil pada kartu serta detail jadwal poster.
+Pembagian saat ini terdiri atas dua bagian pagi dan dua
 bagian siang. Masing-masing bagian memuat lima peserta.
 
 Pertahankan tanda kutip, koma, dan kurung JSON. Untuk tanda kutip di dalam judul,

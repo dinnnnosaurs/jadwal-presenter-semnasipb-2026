@@ -165,8 +165,6 @@ a{color:inherit;}
 .card-badges{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:12px;}
 .card-badges .badge{margin-bottom:0;}
 .poster-session{display:inline-flex;align-items:center;font-size:.65rem;font-weight:700;line-height:1.35;padding:4px 8px;border:1px solid var(--border-soft);border-radius:var(--radius-pill);color:var(--text-secondary);max-width:100%;}
-.poster-moderator{margin:-4px 0 14px;display:flex;flex-direction:column;gap:3px;}
-.poster-moderator .field-value{font-size:.78rem;font-weight:600;line-height:1.4;overflow-wrap:anywhere;}
 .card-title{font-size:.95rem;font-weight:700;line-height:1.4;margin:0 0 14px;color:var(--text-primary);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:calc(1.4em * 3);}
 .person-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;}
 .avatar{width:30px;height:30px;border-radius:50%;background:var(--card-subbox);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--navy-600);}
@@ -207,10 +205,9 @@ a{color:inherit;}
 .modal-close:hover{background:var(--border-soft);}
 .modal-title{font-size:1.15rem;font-weight:800;line-height:1.45;margin:0 0 18px;padding-right:30px;color:var(--text-primary);}
 .modal-meta{margin-top:18px;}
-.modal-poster-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;padding-top:14px;border-top:1px solid var(--border-soft);}
+.modal-poster-meta{margin-top:18px;padding-top:14px;border-top:1px solid var(--border-soft);}
 .modal-poster-meta[hidden]{display:none;}
 .modal-poster-meta .field-value{overflow-wrap:anywhere;}
-@media(max-width:480px){.modal-poster-meta{grid-template-columns:1fr;gap:12px;}}
 .modal-field{margin-bottom:0;}
 .modal-grid-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft);}
 .modal-zoom{background:var(--card-subbox);border-radius:var(--radius-sm);padding:16px;margin-top:20px;}
@@ -345,7 +342,6 @@ a{color:inherit;}
     <div class="scheme-row"><span class="field-label">Skema</span><span class="field-value" id="modalScheme"></span></div>
     <div class="modal-poster-meta" id="modalPosterMeta" hidden>
       <div><div class="field-label">Sesi</div><div class="field-value" id="modalPosterSession"></div></div>
-      <div><div class="field-label">Moderator</div><div class="field-value" id="modalModerator"></div></div>
     </div>
     <div class="modal-meta">
       <div class="modal-field"><div class="field-label">Tanggal</div><div class="field-value" id="modalDate"></div></div>
@@ -390,7 +386,6 @@ a{color:inherit;}
       time: time,
       posterSession: String(posterInfo.sesi || ''),
       posterGroup: String(posterInfo.bagian || ''),
-      moderator: String(posterInfo.moderator || ''),
       searchText: (title + ' ' + name).toLowerCase()
     };
   });
@@ -424,10 +419,6 @@ a{color:inherit;}
     var session = String(r.posterSession || '').replace(/^Sesi\s+/i, '').trim();
     var group = String(r.posterGroup || '').trim();
     return (session ? 'Sesi ' + session : 'Sesi belum ditetapkan') + (group ? ' · ' + group : '');
-  }
-
-  function moderatorLabel(r){
-    return String(r.moderator || '').trim() || 'Belum ditetapkan';
   }
 
   function zoomButtonHtml(){
@@ -502,7 +493,6 @@ a{color:inherit;}
             '<div><div class="field-label">Ketua peneliti</div><div class="field-value">'+escapeHtml(r.name)+'</div></div>'+
           '</div>'+
           '<div class="scheme-row"><span class="field-label">Skema</span><span class="field-value">'+escapeHtml(r.scheme)+'</span></div>'+
-          (isPoster(r) ? '<div class="poster-moderator"><span class="field-label">Moderator</span><span class="field-value">'+escapeHtml(moderatorLabel(r))+'</span></div>' : '')+
         '</div>'+
         '<div class="card-meta">'+
           '<div><div class="field-label">Tanggal</div><div class="field-value">'+escapeHtml(r.date)+'</div></div>'+
@@ -607,7 +597,6 @@ a{color:inherit;}
     var poster = isPoster(r);
     document.getElementById('modalPosterMeta').hidden = !poster;
     document.getElementById('modalPosterSession').textContent = poster ? posterSessionLabel(r) : '';
-    document.getElementById('modalModerator').textContent = poster ? moderatorLabel(r) : '';
     var placeholderZoom = !poster && ZOOM_URL_SEMINAR.trim() === 'link_zoom';
     var hrefZoom = poster ? '' : getZoomHref();
     var tombolZoom = document.getElementById('modalZoomLink');
@@ -707,7 +696,6 @@ a{color:inherit;}
         time: teksJadwalManual(peserta.jam) || jam,
         posterSession: teksJadwalManual(peserta.sesi || data.sesi),
         posterGroup: teksJadwalManual(peserta.bagian || data.bagian),
-        moderator: teksJadwalManual(peserta.moderator || data.moderator),
         searchText: (judul + ' ' + nama).toLowerCase()
       };
     });
